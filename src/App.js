@@ -1,25 +1,29 @@
-import logo from './logo.svg';
+import React, { Suspense }  from 'react';
+import MainLayout from './layout/MainLayout';
+import { HashRouter as Router} from 'react-router-dom';
+import { PublicRoutes as publicRoutes, PublicRouter, PublicRoutes } from './routers';
 import './App.css';
+import 'antd/dist/antd.css';
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <p>Testing Yi Xian</p>
-        <p>Testing commmit without node module files</p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Router>
+        <MainLayout>
+          {
+            PublicRoutes.map(route => {
+              console.log("ROUTE", route)
+              return (
+                <PublicRouter key={route.path} exact={route.exact} path={route.path}>                  
+                  <Suspense fallback={<div>loading...</div>}>
+                    <route.component/>
+                  </Suspense>
+                </PublicRouter>
+            )}
+            )
+          }
+        </MainLayout>
+      </Router>
     </div>
   );
 }
