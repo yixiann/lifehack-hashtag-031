@@ -12,7 +12,6 @@ function App() {
         <MainLayout>
           {
             PublicRoutes.map(route => {
-              console.log("ROUTE", route)
               return (
                 <PublicRouter key={route.path} exact={route.exact} path={route.path}>                  
                   <Suspense fallback={<div>loading...</div>}>

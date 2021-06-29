@@ -7,12 +7,12 @@ const PublicRoutes = [
     component: <p>hello</p>
   },
   {
-    path: '/home',
+    path: '/chat',
     exact: true,
     component: React.lazy(() => import("../pages/chatpage/ChatPage")),
   },
   {
-    path: '/chat',
+    path: '/home',
     exact: true,
     component: React.lazy(() => import("../pages/homepage/HomePage")),
   },
