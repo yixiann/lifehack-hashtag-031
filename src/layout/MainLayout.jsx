@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import {Dropdown, Layout, Button, Select, Breadcrumb, Menu } from 'antd';
-import { GlobalOutlined, UserOutlined, MenuUnfoldOutlined, MenuFoldOutlined, LogoutOutlined } from '@ant-design/icons';
+import { Redirect, Link } from 'react-router-dom';
+import {Dropdown, Layout, Button, Menu, Typography} from 'antd';
+import { UserOutlined, MenuUnfoldOutlined, MenuFoldOutlined, LogoutOutlined } from '@ant-design/icons';
 import SiderBar from '../components/menu'
 
 const MainLayout = ({ children, ...props }) => {
@@ -8,23 +9,46 @@ const MainLayout = ({ children, ...props }) => {
   
   const [collapsed, setCollapsed] = useState(false)
 
-  const { Header, Content, Footer, Sider } = Layout;
+  const { Header, Content, Sider } = Layout;
 
-  const {Option} = Select;
+  const { Text } = Typography
+
+  const username = "Bobby"
+
+  const handleLogout = () => {
+    console.log("LOGOUT")
+  }
+
+  const menu = (
+    <Menu>
+      <Menu.Item key="0" onClick={() => handleLogout()} style={{textAlign:"center"}} icon={<LogoutOutlined />}>
+        <Link to="login">
+          Logout
+        </Link>
+      </Menu.Item>
+    </Menu>
+  );
 
   return (
     <Layout className="main-layout">
-      <Header className='layout-header'>
+      <Header 
+        className='layout-header'
+        style={{
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center'
+        }}
+      >
         <Button onClick={()=> setCollapsed(!collapsed)}>
         { collapsed?
           <MenuUnfoldOutlined/> : <MenuFoldOutlined/>
         }
         </Button>
-        <Dropdown>
-          <a className="ant-dropdown-link" style={{color: 'black', fontSize: '16px', marginRight: '20px'}} onClick={e => e.preventDefault()}>
-            <UserOutlined style={{ marginRight: '5px', fontSize: '16px', color: 'black' }}/>
-              {"BOBBY"}
-          </a>
+        <Dropdown overlay={menu}>
+          <Text style={{color: 'white'}}>
+            <UserOutlined style={{ marginRight: '5px', fontSize: '16px', color: 'white' }}/>
+            {username}
+          </Text>
         </Dropdown>
       </Header>
       <Layout>

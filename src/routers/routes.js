@@ -4,8 +4,11 @@ const PublicRoutes = [
   {
     path: '/login',
     exact: true,
-    component: <p>hello</p>
+    component: React.lazy(() => import("../pages/loginpage/LoginPage"))
   },
+];
+
+const PrivateRoutes = [
   {
     path: '/chat',
     exact: true,
@@ -22,7 +25,5 @@ const PublicRoutes = [
     component: React.lazy(() => import("../pages/aboutpage/AboutPage")),
   },
 ];
-
-const PrivateRoutes = [];
 
 export { PublicRoutes, PrivateRoutes };

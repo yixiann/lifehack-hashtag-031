@@ -1,24 +1,25 @@
-import React, { useEffect, useState } from 'react';
-import { Redirect, Route } from 'react-router-dom';
-import { PublicRoutes } from './routes';
+import React from 'react';
+import { Route } from 'react-router-dom';
+import { PrivateRoutes, PublicRoutes } from './routes';
 
-const PublicRouteHandling = ({ children, component, loggedInUser, ...rest }) => {
+const PrivateRouteHandling = ({ children, component, ...props }) => {
+  return (
+    <Route {...props}
+      render={() => children ? children : component}
+    />
+  )
+};
 
-  const [location, setLocation ] = useState('/')
-
-  useEffect(()=>{
-    if(window.location.pathname!='/'){
-      setLocation(window.location.pathname)
-    }
-  }, [window.location.pathname])
+const PublicRouteHandling = ({ children, component, ...props }) => {
 
   return (
-    <Route {...rest}
+    <Route {...props}
       render={() => children ? children : component}
     />
   )
 };
 
 const PublicRouter = PublicRouteHandling
+const PrivateRouter = PrivateRouteHandling
 
-export { PublicRoutes, PublicRouter };
+export { PrivateRoutes, PrivateRouter, PublicRoutes, PublicRouter };
