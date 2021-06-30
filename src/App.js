@@ -4,6 +4,7 @@ import { HashRouter as Router} from 'react-router-dom';
 import { PrivateRoutes , PrivateRouter, PublicRoutes , PublicRouter } from './routers';
 import './App.css';
 import 'antd/dist/antd.css';
+import 'bootstrap/dist/css/bootstrap.css';
 import ErrorBoundary from 'antd/lib/alert/ErrorBoundary';
 
 function App() {
