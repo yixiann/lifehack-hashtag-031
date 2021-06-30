@@ -1,13 +1,25 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Button, Table, Form, Input, Typography } from 'antd';
+import axios from 'axios';
 
 export const HomePage = ({
   ...props
 }) => {
 
+  const [ data, setData ] = useState([])
+
+
+  const fetchAll = () => {
+    axios
+      .get("/api/test")
+      .then((res) => setData(res.data))
+      .catch((err) => console.log("ERROR", err));
+  }
+
   useEffect(() => {
-    console.log("TEST HOME")
+    fetchAll()
   },[])
+  
 
   const { Title } = Typography
 
@@ -22,16 +34,19 @@ export const HomePage = ({
     {title: "Text", dataIndex: "text", key: "text" },
     {title: "Number", dataIndex: "number", key:"number"},
   ]
-
-  const fakeData = [
-    {text: "Hello", number: 9},
-    {text: "Bye", number: 2}
-  ]
-
+  
   const submitFn = (e) => {
     console.log("Submit",e)
+    var bodyFormData = new FormData();
+    bodyFormData.append('text', e.text);
+    bodyFormData.append('number', e.number);
+    axios
+      .post("api/test/", bodyFormData)
+      .catch((err) => console.log("ERROR", err));
+
+    fetchAll()
   }
-    
+  
   return (
     <div className="Home" style={{padding: "10px"}}>
       <Title>A form and table for Testing Purposes</Title>
@@ -67,7 +82,7 @@ export const HomePage = ({
       <Table
         style={{margin: "30px"}}
         columns={columns}
-        dataSource={fakeData}
+        dataSource={data}
       />
     </div>
   )

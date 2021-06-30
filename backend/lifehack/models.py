@@ -7,4 +7,4 @@ class Test(models.Model):
     number = models.IntegerField()
 
     def __str__ (self):
-        return self.text + " and " + str(self.number)
+        return f'{self.text} and {str(self.number)}'
