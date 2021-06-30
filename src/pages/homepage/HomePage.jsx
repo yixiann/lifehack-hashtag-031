@@ -1,12 +1,12 @@
 import React, { useEffect } from 'react';
-import { Button, Table, Form, InputNumber, Input, Typography } from 'antd';
+import { Button, Table, Form, Input, Typography } from 'antd';
 
 export const HomePage = ({
   ...props
 }) => {
 
   useEffect(() => {
-    // console.log("TEST HOME")
+    console.log("TEST HOME")
   },[])
 
   const { Title } = Typography

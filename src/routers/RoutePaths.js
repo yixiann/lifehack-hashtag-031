@@ -1,6 +1,10 @@
 import { Children } from "react";
 
 const RoutePaths = {
+  'login' : {
+    path: '/login',
+    sider: false,
+  },
   'home' : {
       path: '/home',
       sider: true,
