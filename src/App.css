@@ -51,6 +51,116 @@
   background: #002766 !important
 }
 
+/* Height of content */
+
 .ant-layout-content{
   min-height: calc(100vh - 64px) !important
+}
+
+/* SWAL MODALS */S
+.success-swal {
+  font-family: Calibri, sans-serif;
+  box-shadow: 0px 0px 10px 5px grey;
+}
+
+.success-swal .swal-title {
+  padding: 0px;
+  margin: 0px;
+  color: #000000;
+  font-size: 36px;
+}
+
+.success-swal .swal-text {
+  color: #000000;
+  font-size: 20px;
+  text-align: center;
+}
+
+.success-swal .swal-icon--success__ring {
+  border-color: #21BA45;
+}
+
+.success-swal .swal-icon--success__line {
+  background-color: #21BA45;
+}
+
+.error-swal {
+  font-family: Calibri, sans-serif;
+  box-shadow: 0px 0px 10px 5px grey;
+}
+
+.error-swal .swal-title {
+  padding: 0px;
+  margin: 0px;
+  color: #000000;
+  font-size: 36px;
+}
+
+.error-swal .swal-text {
+  color: #000000;
+  font-size: 20px;
+  text-align: center;
+}
+
+.error-swal .swal-icon--error {
+  border-color: red;
+}
+
+.error-swal .swal-icon--error__line {
+  background-color: red;
+}
+
+.loading-swal {
+  padding: 30px 0px 0px 0px;
+  font-family: Calibri, sans-serif;
+  box-shadow: 0px 0px 10px 5px grey;
+  }
+
+.loading-swal .swal-title {
+  padding: 0px;
+  margin: 0px;
+  color: #000000;
+  font-size: 36px;
+}
+
+.loading-swal .swal-text {
+  color: #000000;
+  font-size: 20px;
+  text-align: center;
+}
+
+.loading-swal .swal-icon--loading {
+  border-color: red;
+}
+
+.loading-swal .swal-icon--loading__line {
+  background-color: red;
+}
+
+
+.confirmation-swal {
+  font-family: Calibri, sans-serif;
+  box-shadow: 0px 0px 10px 5px grey;
+}
+  
+.confirmation-swal .swal-title {
+  padding: 0px;
+  margin: 0px;
+  color: #000000;
+  font-size: 36px;
+}
+
+.confirmation-swal .swal-text {
+  color: #000000;
+  font-size: 20px;
+  text-align: center;
+}
+
+.confirmation-swal .swal-button {
+  font-size: 16px;
+  width: 100px;
+}
+
+.confirmation-swal .swal-button--danger:focus {
+  box-shadow: none;
 }
