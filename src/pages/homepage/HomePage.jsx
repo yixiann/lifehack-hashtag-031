@@ -1,30 +1,53 @@
 import React, { useEffect, useState } from 'react';
 import { Button, Table, Form, Input, Typography } from 'antd';
 import axios from 'axios';
+import URI, { convertToFormData } from '../../constants/URL'
+import { confirmationModal, errorModal, successModal } from '../../components/UI/submissionModal';
 
 export const HomePage = ({
   ...props
 }) => {
 
-  const [ data, setData ] = useState([])
-
-
-  const fetchAll = () => {
-    axios
-      .get("/api/test")
-      .then((res) => setData(res.data))
-      .catch((err) => console.log("ERROR", err));
-  }
-
-  useEffect(() => {
-    fetchAll()
-  },[])
-  
-
   const { Title } = Typography
 
   const [ form ] = Form.useForm()
 
+  const [ data, setData ] = useState([])
+
+  const [ loading, setLoading ] = useState(true)
+
+  const fetchAllTest = () => {
+    setLoading(true)
+    axios
+      .get(URI.test)
+      .then((res) => {
+        setData(res.data.reverse())
+        setLoading(false)
+      })
+      .catch((err) => {
+        setLoading(false)
+        errorModal(err)
+        console.log("ERROR", err)
+      });
+  }
+
+  const submitTest = (e) => {
+    axios
+      .post(URI.test, convertToFormData(e))
+      .then(()=>{
+        successModal("Successfully submitted")
+        fetchAllTest()
+      })
+      .catch((err) => {
+        errorModal(err)
+        console.log("ERROR", err)
+      });
+  }
+
+  useEffect(() => {
+    fetchAllTest()
+  },[])
+  
   const layout = {
     labelCol: {span: 8},
     wrapperCol: {span: 16},
@@ -34,17 +57,16 @@ export const HomePage = ({
     {title: "Text", dataIndex: "text", key: "text" },
     {title: "Number", dataIndex: "number", key:"number"},
   ]
-  
+
   const submitFn = (e) => {
     console.log("Submit",e)
-    var bodyFormData = new FormData();
-    bodyFormData.append('text', e.text);
-    bodyFormData.append('number', e.number);
-    axios
-      .post("api/test/", bodyFormData)
-      .catch((err) => console.log("ERROR", err));
-
-    fetchAll()
+    confirmationModal({
+      title: "Submit",
+      text: "Are you sure?",
+      titleLoading: "Loading",
+      functionCalled: submitTest,
+      data: e
+    })
   }
   
   return (
@@ -83,6 +105,7 @@ export const HomePage = ({
         style={{margin: "30px"}}
         columns={columns}
         dataSource={data}
+        loading={loading}
       />
     </div>
   )
