@@ -1,27 +1,42 @@
-import React, { useEffect, useState} from 'react'
-import { Button } from 'antd';
-import { Link, Redirect } from 'react-router-dom';
+import React, { useContext } from 'react';
+import { useHistory, useLocation } from "react-router-dom";
+import { Button, Row, Col } from 'antd';
 
-export const LoginPage = ({
+export const Loginpage = ({
+  authContext,
   ...props
 }) => {
 
-  useEffect(() => {
-    console.log("TEST Login")
-  },[])
+  const useAuth = () => {
+    return useContext(authContext);
+  }
 
-  // const [ login, setLogin ] = useState(false)
+  var history = useHistory();
+  var location = useLocation();
+  var auth = useAuth();
+
+  
+  var { from } = location.state || { from: { pathname: "/home" } };
+  var login = () => {
+    auth.signin(() => {
+      history.replace(from);
+    });
+  };
 
   return (
-    <div className="Login">
-      <p>Login</p>
-      <Button>
-        <Link to='/home'>
-          Login
-        </Link>
-      </Button>
+    <div style={{ height: '100vh'}}>
+      <Row justify="center" align="middle" style={{height: 'inherit'}}>
+        <Col>
+          <Button 
+            onClick={login}
+            style={{margin:'auto'}}
+          >
+            Log in
+          </Button>
+        </Col>
+      </Row>
     </div>
-  )
+  );
 }
 
-export default LoginPage
+export default Loginpage

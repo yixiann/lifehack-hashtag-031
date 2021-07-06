@@ -1,33 +1,43 @@
-import React, { useState } from 'react';
-import { Redirect, Link } from 'react-router-dom';
+import React, { useState, useContext, useEffect} from 'react';
 import {Dropdown, Layout, Button, Menu, Typography} from 'antd';
 import { UserOutlined, MenuUnfoldOutlined, MenuFoldOutlined, LogoutOutlined } from '@ant-design/icons';
+import { useHistory } from "react-router-dom";
 import SiderBar from '../components/menu'
 
-const MainLayout = ({ children, ...props }) => {
+const MainLayout = ({ children, authContext, ...props }) => {
 
-  
   const [collapsed, setCollapsed] = useState(false)
 
   const { Header, Content, Sider } = Layout;
 
   const { Text } = Typography
 
-  const username = "Bobby"
+  const [ username, setUsername ] = useState("")
+
+  const useAuth = () => {
+    return useContext(authContext);
+  }
+
+  var history = useHistory();
+  var auth = useAuth();
+
+  useEffect(()=>{
+    if(username!=auth.user){
+      setUsername(auth.user)
+    }
+  },[username])
 
   const handleLogout = () => {
-    console.log("LOGOUT")
+    auth.signout(() => history.push("/login"))
   }
 
   const menu = (
     <Menu>
-      <Menu.Item key="0" onClick={() => handleLogout()} style={{textAlign:"center"}} icon={<LogoutOutlined />}>
-        <Link to="login">
-          Logout
-        </Link>
+      <Menu.Item key="0" style={{textAlign:"center"}} icon={<LogoutOutlined />}>
+        <Button onClick={handleLogout}>Sign Out</Button>
       </Menu.Item>
     </Menu>
-  );
+  );  
 
   return (
     <Layout className="main-layout">
