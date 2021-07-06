@@ -22,7 +22,7 @@ const MainLayout = ({ children, authContext, ...props }) => {
   var auth = useAuth();
 
   useEffect(()=>{
-    if(username!=auth.user){
+    if(username!==auth.user){
       setUsername(auth.user)
     }
   },[username])
