@@ -1,25 +1,25 @@
-import React from 'react';
-import { Route } from 'react-router-dom';
-import { PrivateRoutes, PublicRoutes } from './routes';
+import React, { useContext } from "react";
+import { Route, Redirect } from "react-router-dom";
 
-const PrivateRouteHandling = ({ children, component, ...props }) => {
+const PrivateRoute = ({ children, authContext, ...rest }) => {
+  var auth = useContext(authContext)
   return (
-    <Route {...props}
-      render={() => children ? children : component}
+    <Route
+      {...rest}
+      render={({ location }) =>
+        auth.user ? (
+          children
+        ) : (
+          <Redirect
+            to={{
+              pathname: "/login",
+              state: { from: location }
+            }}
+          />
+        )
+      }
     />
-  )
-};
+  );
+}
 
-const PublicRouteHandling = ({ children, component, ...props }) => {
-
-  return (
-    <Route {...props}
-      render={() => children ? children : component}
-    />
-  )
-};
-
-const PublicRouter = PublicRouteHandling
-const PrivateRouter = PrivateRouteHandling
-
-export { PrivateRoutes, PrivateRouter, PublicRoutes, PublicRouter };
+export {PrivateRoute}
