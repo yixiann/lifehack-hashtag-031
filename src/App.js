@@ -63,7 +63,7 @@ const useProvideAuth = () => {
   const [user, setUser] = useState(null);
 
   const signin = cb => {
-    return fakeAuth.signin(() => {
+    return fakeAuth.signin((values) => {
       setUser("user");
       cb();
     });

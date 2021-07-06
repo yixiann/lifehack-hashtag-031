@@ -1,5 +1,4 @@
 import React, { useEffect} from 'react'
-import { Button } from 'antd';
 
 export const ChatPage = ({
   ...props
