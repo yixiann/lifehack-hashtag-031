@@ -3,7 +3,8 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import './App.css';
 import 'antd/dist/antd.css';
 import 'bootstrap/dist/css/bootstrap.css';
-import Loginpage from "./pages/loginpage/LoginPage";
+import LoginPage from "./pages/loginpage/LoginPage";
+import CreateUserPage from "./pages/loginpage/CreateUserPage";
 import MainLayout from "./layout/MainLayout";
 import { PrivateRoutes } from "./routers/routes";
 import { PrivateRoute } from "./routers";
@@ -20,7 +21,10 @@ export default function app() {
       <Router>
         <Switch>
           <Route path="/login">
-            <Loginpage authContext={authContext}/>
+            <LoginPage authContext={authContext}/>
+          </Route>
+          <Route path="/createuser">
+            <CreateUserPage authContext={authContext}/>
           </Route>
 
           <MainLayout
