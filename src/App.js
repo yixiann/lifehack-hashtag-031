@@ -11,9 +11,9 @@ import { PrivateRoute } from "./routers";
 export default function app() {
 
   //TODO Check if user log in 
-  window.onbeforeunload = function() {
-    console.log("TEST")
-  };
+  // window.onbeforeunload = function(){
+  //     return true;
+  // }
 
   return (
     <ProvideAuth>
@@ -63,8 +63,8 @@ const useProvideAuth = () => {
   const [user, setUser] = useState(null);
 
   const signin = cb => {
-    return fakeAuth.signin((values) => {
-      setUser("user");
+    return fakeAuth.signin(() => {
+      setUser(cb());
       cb();
     });
   };
