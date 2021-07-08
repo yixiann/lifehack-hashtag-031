@@ -1,6 +1,6 @@
 from rest_framework import viewsets
-from .serializers import UserSerializer, TestSerializer
-from .models import User, Test
+from .serializers import UserSerializer, TestSerializer, ChatSerializer
+from .models import User, Test, Chat
 
 # Create your views here.
 class UserView(viewsets.ModelViewSet):
@@ -10,3 +10,7 @@ class UserView(viewsets.ModelViewSet):
 class TestView(viewsets.ModelViewSet):
     serializer_class = TestSerializer
     queryset = Test.objects.all()
+
+class ChatView(viewsets.ModelViewSet):
+    serializer_class = ChatSerializer
+    queryset = Chat.objects.all()
