@@ -22,6 +22,7 @@ from lifehack import views
 router = routers.DefaultRouter()
 router.register(r'user', views.UserView)
 router.register(r'test', views.TestView)
+router.register(r'chat', views.ChatView)
 
 urlpatterns = [
     path('admin/', admin.site.urls),

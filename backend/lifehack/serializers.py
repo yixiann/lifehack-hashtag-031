@@ -1,6 +1,6 @@
 from django.contrib.auth.hashers import make_password
 from rest_framework import serializers
-from .models import User, Test
+from .models import User, Test, Chat
 
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
@@ -16,3 +16,8 @@ class TestSerializer(serializers.ModelSerializer):
     class Meta:
         model = Test
         fields = ('id', 'text', 'number')
+
+class ChatSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Chat
+        fields = ('id', 'fromAddress', 'toAddress', 'text', 'date')

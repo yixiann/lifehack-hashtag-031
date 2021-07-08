@@ -11,3 +11,12 @@ class Test(models.Model):
 
     def __str__ (self):
         return f'{self.text} and {str(self.number)}'
+
+class Chat(models.Model):
+    fromAddress = models.CharField(max_length=120)
+    toAddress = models.CharField(max_length=120)
+    text = models.CharField(max_length=1000)
+    date = models.DateTimeField(auto_now_add=True)
+
+    def __str__ (self):
+        return f'From: {self.fromAddress} To: {self.toAddress} Text: {self.text} Date: {str(self.date)}'
