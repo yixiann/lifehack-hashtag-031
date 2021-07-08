@@ -1,62 +1,93 @@
-import React, { Suspense, useEffect, useState }  from 'react';
-import MainLayout from './layout/MainLayout';
-import { HashRouter as Router} from 'react-router-dom';
-import { PrivateRoutes , PrivateRouter, PublicRoutes , PublicRouter } from './routers';
+import React, { createContext, useState, Suspense } from "react";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import './App.css';
 import 'antd/dist/antd.css';
 import 'bootstrap/dist/css/bootstrap.css';
-import ErrorBoundary from 'antd/lib/alert/ErrorBoundary';
+import Loginpage from "./pages/loginpage/LoginPage";
+import MainLayout from "./layout/MainLayout";
+import { PrivateRoutes } from "./routers/routes";
+import { PrivateRoute } from "./routers";
 
-function App() {
+export default function app() {
 
-  const [ login , setLogin ] = useState(false)
-
-  useEffect(()=>{
-    console.log("CHECK", window.location)
-    console.log("CHECK2", window.location.hash)
-    if(window.location.hash!='#/login'){
-      setLogin(true)
-    }
-  })
-
-  console.log("CHECKp", window.location)
-  console.log("CHECKp2", window.location.hash)
-
+  //TODO Check if user log in 
+  // window.onbeforeunload = function(){
+  //     return true;
+  // }
 
   return (
-    <div className="App">
+    <ProvideAuth>
       <Router>
-        <ErrorBoundary>
-        {
-          PublicRoutes.map(route => {
-            return (
-              <PublicRouter key={route.path} exact={route.exact} path={route.path}>                  
-                <Suspense fallback={<div>loading...</div>}>
-                  <route.component/>
-                </Suspense>
-              </PublicRouter>
-          )}
-          )
-        }
-        {
-          <MainLayout>
+        <Switch>
+          <Route path="/login">
+            <Loginpage authContext={authContext}/>
+          </Route>
+
+          <MainLayout
+            authContext={authContext}
+          >
             {
               PrivateRoutes.map(route => {
                 return (
-                  <PrivateRouter key={route.path} exact={route.exact} path={route.path}>                  
+                  <PrivateRoute path={route.path} authContext={authContext}>
                     <Suspense fallback={<div>loading...</div>}>
                       <route.component/>
                     </Suspense>
-                  </PrivateRouter>
+                  </PrivateRoute>
               )}
               )
             }
           </MainLayout>
-        }
-        </ErrorBoundary>
+        </Switch>
       </Router>
-    </div>
+    </ProvideAuth>
   );
 }
 
-export default App;
+// LOGIN CHECKING
+const authContext = createContext();
+
+const fakeAuth = {
+  isAuthenticated: false,
+  signin(cb) {
+    fakeAuth.isAuthenticated = true;
+    setTimeout(cb, 100); // fake async
+  },
+  signout(cb) {
+    fakeAuth.isAuthenticated = false;
+    setTimeout(cb, 100);
+  }
+};
+
+const useProvideAuth = () => {
+  const [user, setUser] = useState(null);
+
+  const signin = cb => {
+    return fakeAuth.signin(() => {
+      setUser(cb());
+      cb();
+    });
+  };
+
+  const signout = cb => {
+    return fakeAuth.signout(() => {
+      setUser(null);
+      cb();
+    });
+  };
+
+  return {
+    user,
+    signin,
+    signout
+  };
+}
+
+const ProvideAuth = ({ children }) => {
+  const auth = useProvideAuth();
+  return (
+    <authContext.Provider value={auth}>
+      {children}
+    </authContext.Provider>
+  );
+}
