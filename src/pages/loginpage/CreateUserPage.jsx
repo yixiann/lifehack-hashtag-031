@@ -5,8 +5,9 @@ import { UserOutlined, LockOutlined } from '@ant-design/icons';
 import axios from 'axios';
 import URI, { convertToFormData } from '../../constants/URL'
 import { confirmationModal, errorModal, successModal } from '../../components/UI/submissionModal';
+import { Link } from 'react-router-dom';
 
-export const LoginPage = ({
+export const CreateUserPage = ({
   authContext,
   ...props
 }) => {
@@ -15,43 +16,27 @@ export const LoginPage = ({
     return useContext(authContext);
   }
 
-  const [ incorrect, setIncorrect ] = useState(false)
-
-  const signInAxios = (values) => {
-    var tokenData = axios
-      .post(URI.signIn, convertToFormData(values))
-      .then((res)=>{
-        return res.data.token
+  const createUserAxios = (values) => {
+    var { from } = location.state || { from: { pathname: "/login" } };
+    axios
+      .post(URI.createUser, convertToFormData(values))
+      .then(()=>{
+        history.replace(from)
+        successModal("Successfully Created User")
       }).catch((err) => {
         console.log("ERROR", err)
       });
-    return tokenData
   }
 
   const [form] = Form.useForm()
 
   var history = useHistory();
   var location = useLocation();
-  var auth = useAuth();
 
-  async function login(){
-    var { from } = location.state || { from: { pathname: "/home" } };
+  async function createUser(){
     var values = form.getFieldsValue()
-    if(values){
-      var token = await signInAxios(values)
-      if(token){
-        auth.signin(() => {
-          history.replace(from);
-          return {
-            username: values.username,
-            token
-          }
-        })
-      } else {
-        setIncorrect(true)
-      }
-    }
-    console.log("Token", token)
+    console.log("VALUE", values)
+    createUserAxios(values)
   };
 
   return (
@@ -60,11 +45,11 @@ export const LoginPage = ({
         <Col>
           <Form
             form={form}
-            name="login"
+            name="createUser"
           >
             <Form.Item
               name="username"
-              rules={[{required: true, message: 'Please input your Username!' }]}
+              rules={[{required: true, message: 'Please input a Username!' }]}
             >
               <Input
                 prefix={<UserOutlined/>}
@@ -73,7 +58,7 @@ export const LoginPage = ({
             </Form.Item>
             <Form.Item
               name="password"
-              rules={[{required: true, message: 'Please input your Password!' }]}
+              rules={[{required: true, message: 'Please input a Password!' }]}
             >
               <Input
                 prefix={<LockOutlined/>}
@@ -81,19 +66,22 @@ export const LoginPage = ({
                 placeholder="Password"
               />
             </Form.Item>
-            {
-              incorrect &&
-              <p style={{color:'red', margin:'0px', padding: '0px'}}>Incorrect Username or Password</p>
-            }
             <Form.Item>
             <Button 
               type="primary"
-              onClick={()=>(form.validateFields().then(login()))}
+              onClick={()=>(form.validateFields().then(createUser()))}
               style={{alignItems: 'center', width: "-webkit-fill-available"}}
             >
-              Log in
+              Create User
             </Button>
-            Or <a href="/createuser">register now!</a>
+            <Button 
+              type="primary"
+              style={{alignItems: 'center', marginTop: '10px',width: "-webkit-fill-available"}}
+            >
+              <Link to='/login'>
+                Back
+              </Link>
+            </Button>
             </Form.Item>
           </Form>
         </Col>
@@ -102,4 +90,4 @@ export const LoginPage = ({
   );
 }
 
-export default LoginPage
+export default CreateUserPage
