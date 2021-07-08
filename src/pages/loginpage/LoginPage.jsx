@@ -2,6 +2,9 @@ import React, { useContext, useEffect, useState } from 'react';
 import { useHistory, useLocation } from "react-router-dom";
 import { Button, Row, Col, Form, Input, Checkbox } from 'antd';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
+import axios from 'axios';
+import URI, { convertToFormData } from '../../constants/URL'
+import { confirmationModal, errorModal, successModal } from '../../components/UI/submissionModal';
 
 export const Loginpage = ({
   authContext,
@@ -12,73 +15,43 @@ export const Loginpage = ({
     return useContext(authContext);
   }
 
+  const [ incorrect, setIncorrect ] = useState(false)
+
+  const signInAxios = (values) => {
+    var tokenData = axios
+      .post(URI.signIn, convertToFormData(values))
+      .then((res)=>{
+        return res.data.token
+      }).catch((err) => {
+        console.log("ERROR", err)
+      });
+    return tokenData
+  }
+
   const [form] = Form.useForm()
-
-  const [ usernameFailed, setUsernameFailed ] = useState(false)
-  const [ passwordFailed, setPasswordFailed ] = useState(false)
-
-  const [ validation, setValidation ] = useState(false)
 
   var history = useHistory();
   var location = useLocation();
   var auth = useAuth();
 
-  const users = [
-    {
-      username: "Bobby",
-      password: "HELLO"
-    },
-    {
-      username: "Kate",
-      password: "BYE"
-    }
-  ]
-
-  useEffect(()=>{
-    if(validation){
-      var { from } = location.state || { from: { pathname: "/home" } };
-      var values = form.getFieldsValue()
-      form.validateFields().then((e)=>{
-        if(e){
-          auth.signin(() => {
-            history.replace(from);
-            return values.username
-          })
-        }
-      })
-      setValidation(false)
-    }
-  }, [validation])
-
-  var login = () => {
-
+  async function login(){
+    var { from } = location.state || { from: { pathname: "/home" } };
     var values = form.getFieldsValue()
-
-    var listOfUsers = users.map((item)=>(item.username))
-
-    var passwordOfUser = users.filter((item)=>(item.username===values.username))[0]?.password 
-
-    // IF USERNAME EXIST
-    if(listOfUsers.includes(values.username)){
-      setUsernameFailed(false)
-
-      //IF PASSWORD IS CORRECT only check password if user check passes
-      if(passwordOfUser === values.password){
-        setPasswordFailed(false)
-        
+    if(values){
+      var token = await signInAxios(values)
+      if(token){
+        auth.signin(() => {
+          history.replace(from);
+          return {
+            username: values.username,
+            token
+          }
+        })
       } else {
-
-        // PASSWORD FAIL
-        setPasswordFailed(true)
+        setIncorrect(true)
       }
-
-    } else {
-
-      // USERNAME FAIL
-      setUsernameFailed(true)
     }
-
-    setValidation(true)
+    console.log("Token", token)
   };
 
   return (
@@ -88,21 +61,11 @@ export const Loginpage = ({
           <Form
             form={form}
             name="login"
-            onFinish={login}
+            onFinish={()=>(login())}
           >
             <Form.Item
               name="username"
-              rules={[
-                { required: true, message: 'Please input your Username!' },
-                () => ({
-                  validator(_, value) {
-                    if (usernameFailed && form.getFieldsValue().username!=undefined) {
-                      return Promise.reject(new Error('User does not exist'));
-                    }
-                    return Promise.resolve();
-                  }
-                }),
-              ]}
+              rules={[{required: true, message: 'Please input your Username!' }]}
             >
               <Input
                 prefix={<UserOutlined/>}
@@ -111,18 +74,7 @@ export const Loginpage = ({
             </Form.Item>
             <Form.Item
               name="password"
-              rules={[
-                { required: true, message: 'Please input your Password!' },
-                () => ({
-                  validator(_, value) {
-                    console.log(form.getFieldsValue().password)
-                    if (passwordFailed && !!form.getFieldsValue().password) {
-                      return Promise.reject(new Error('Incorrect Password'));
-                    }
-                    return Promise.resolve();
-                  }
-                }),
-              ]}
+              rules={[{required: true, message: 'Please input your Password!' }]}
             >
               <Input
                 prefix={<LockOutlined/>}
@@ -130,11 +82,15 @@ export const Loginpage = ({
                 placeholder="Password"
               />
             </Form.Item>
+            {
+              incorrect &&
+              <p style={{color:'red', margin:'0px', padding: '0px'}}>Incorrect Username or Password</p>
+            }
             <Form.Item>
               <Col align='middle'>
                 <Button 
                   type="primary"
-                  onClick={login}
+                  onClick={()=>(form.validateFields().then(login()))}
                   style={{alignItems: 'center'}}
                 >
                   Log in

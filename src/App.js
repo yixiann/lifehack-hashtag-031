@@ -31,7 +31,7 @@ export default function app() {
                 return (
                   <PrivateRoute path={route.path} authContext={authContext}>
                     <Suspense fallback={<div>loading...</div>}>
-                      <route.component/>
+                      <route.component authContext={authContext}/>
                     </Suspense>
                   </PrivateRoute>
               )}
@@ -47,37 +47,40 @@ export default function app() {
 // LOGIN CHECKING
 const authContext = createContext();
 
-const fakeAuth = {
+const authUser = {
   isAuthenticated: false,
-  signin(cb) {
-    fakeAuth.isAuthenticated = true;
-    setTimeout(cb, 100); // fake async
+  signin(fn) {
+    authUser.isAuthenticated = true;
+    fn()
   },
-  signout(cb) {
-    fakeAuth.isAuthenticated = false;
-    setTimeout(cb, 100);
+  signout(fn) {
+    authUser.isAuthenticated = false;
+    fn()
   }
 };
 
 const useProvideAuth = () => {
   const [user, setUser] = useState(null);
+  const [token, setToken] = useState("")
 
-  const signin = cb => {
-    return fakeAuth.signin(() => {
-      setUser(cb());
-      cb();
+  const signin = fn => {
+    return authUser.signin(() => {
+      setUser(fn().username);
+      setToken(fn().token)
+      fn();
     });
   };
 
-  const signout = cb => {
-    return fakeAuth.signout(() => {
+  const signout = fn => {
+    return authUser.signout(() => {
       setUser(null);
-      cb();
+      fn();
     });
   };
 
   return {
     user,
+    token,
     signin,
     signout
   };

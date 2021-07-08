@@ -1,12 +1,24 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { Button, Table, Form, Input, Typography } from 'antd';
 import axios from 'axios';
 import URI, { convertToFormData } from '../../constants/URL'
 import { confirmationModal, errorModal, successModal } from '../../components/UI/submissionModal';
 
 export const HomePage = ({
+  authContext,
   ...props
 }) => {
+
+  const useAuth = () => {
+    return useContext(authContext);
+  }
+
+  var auth = useAuth();
+
+  var { token, user } = auth
+  console.log("TOKEN",token)
+  console.log("USER", user)
+
 
   const { Title } = Typography
 
@@ -18,31 +30,40 @@ export const HomePage = ({
 
   const fetchAllTest = () => {
     setLoading(true)
-    axios
-      .get(URI.test)
-      .then((res) => {
-        setData(res.data.reverse())
-        setLoading(false)
-      })
-      .catch((err) => {
-        setLoading(false)
-        errorModal(err)
-        console.log("ERROR", err)
-      });
+    const headers = {
+      'Content-Type': 'application/json',
+      'Authorization': 'jwt '.concat(token)
+    }
+    axios.get(URI.test, {
+      headers: headers
+    }).then((res) => {
+      setData(res.data.reverse())
+      setLoading(false)
+    })
+    .catch((err) => {
+      setLoading(false)
+      errorModal(err)
+      console.log("ERROR", err)
+    });
   }
 
-  const submitTest = (e) => {
-    axios
-      .post(URI.test, convertToFormData(e))
-      .then(()=>{
-        successModal("Successfully submitted")
-        fetchAllTest()
-      })
-      .catch((err) => {
-        errorModal(err)
-        console.log("ERROR", err)
-      });
+  const submitTest = (data) => {
+    const headers = {
+      'Content-Type': 'application/json',
+      'Authorization': 'jwt '.concat(token)
+    }
+    axios.post(URI.test, convertToFormData(data), {
+      headers: headers
+    }).then(()=>{
+      successModal("Successfully submitted")
+      fetchAllTest()
+    })
+    .catch((err) => {
+      errorModal(err)
+      console.log("ERROR", err)
+    });
   }
+
 
   useEffect(() => {
     fetchAllTest()
@@ -65,7 +86,10 @@ export const HomePage = ({
       text: "Are you sure?",
       titleLoading: "Loading",
       functionCalled: submitTest,
-      data: e
+      data: {
+        ...e,
+        token: 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjo5LCJ1c2VybmFtZSI6ImhlbGxvIiwiZXhwIjoxNjI1NzI0NDUxLCJlbWFpbCI6IiJ9.nDNBHhxzT_97R1p8PoEwxYl5PYDnqOurNEmyphz2DzY'
+      }
     })
   }
   
