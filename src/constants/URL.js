@@ -1,7 +1,7 @@
 const URI = {
   test: 'api/test/',
   signIn: 'token-auth/',
-  createUser: 'api/user/'
+  createUser: 'user/'
 }
 
 export default URI
