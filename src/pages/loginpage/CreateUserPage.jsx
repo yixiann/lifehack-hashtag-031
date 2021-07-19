@@ -12,10 +12,6 @@ export const CreateUserPage = ({
   ...props
 }) => {
 
-  const useAuth = () => {
-    return useContext(authContext);
-  }
-
   const createUserAxios = (values) => {
     var { from } = location.state || { from: { pathname: "/login" } };
     axios

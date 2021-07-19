@@ -1,6 +1,7 @@
 const URI = {
   test: 'api/test/',
   signIn: 'token-auth/',
+  signInRefresh: 'token-auth-refresh/',
   createUser: 'user/'
 }
 
