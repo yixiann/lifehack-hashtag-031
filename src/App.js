@@ -66,7 +66,7 @@ export default function app() {
 
 // LOGIN CHECKING
 const authContext = createContext();
-
+console.log("authContext", authContext)
 const authUser = {
   isAuthenticated: false,
   signin(fn) {

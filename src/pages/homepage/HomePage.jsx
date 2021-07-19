@@ -3,7 +3,6 @@ import { Button, Table, Form, Input, Typography } from 'antd';
 import axios from 'axios';
 import URI, { convertToFormData } from '../../constants/URL'
 import { confirmationModal, errorModal, successModal } from '../../components/UI/submissionModal';
-
 export const HomePage = ({
   authContext,
   ...props
@@ -16,6 +15,9 @@ export const HomePage = ({
   var auth = useAuth();
 
   var { token, user } = auth
+
+  // console.log("TOKEN",token)
+  // console.log("USER", user)
 
   const { Title } = Typography
 

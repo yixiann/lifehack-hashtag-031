@@ -164,3 +164,7 @@
 .confirmation-swal .swal-button--danger:focus {
   box-shadow: none;
 }
+.chat{
+  width: 100%;
+  height: 100%;
+}

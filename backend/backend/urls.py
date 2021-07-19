@@ -24,10 +24,12 @@ from rest_framework_jwt.views import refresh_jwt_token
 router = routers.DefaultRouter()
 router.register(r'user', views.UserView)
 router.register(r'test', views.TestView)
+router.register(r'chat', views.ChatView)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include(router.urls)),
     path('token-auth/', obtain_jwt_token),
     path('token-auth-refresh/', refresh_jwt_token)
+    path('user/', views.UserList.as_view())
 ]
