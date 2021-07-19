@@ -56,16 +56,12 @@ export const LoginPage = ({
     }
     window.localStorage.setItem('username', values.username)
     window.localStorage.setItem('token', token);
-    console.log("Token", token)
   };
-
-  console.log("TEST LOGIN", window.localStorage.getItem('username'), window.localStorage.getItem('token'));
 
   // If there is a token stored in local storage, use token to get new token
   useEffect(()=>{
     var token = window.localStorage.getItem('token')
     if(!!token){
-      console.log("RUN")
       const headers = {'Content-Type': 'application/json',}
       axios
       .post(URI.signInRefresh, {token}, {headers})
