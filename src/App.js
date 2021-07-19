@@ -1,5 +1,5 @@
 import React, { createContext, useState, Suspense } from "react";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route, Redirect, Link } from "react-router-dom";
 import './App.css';
 import 'antd/dist/antd.css';
 import 'bootstrap/dist/css/bootstrap.css';
@@ -8,40 +8,56 @@ import CreateUserPage from "./pages/loginpage/CreateUserPage";
 import MainLayout from "./layout/MainLayout";
 import { PrivateRoutes } from "./routers/routes";
 import { PrivateRoute } from "./routers";
+import { Result, Button } from "antd";
 
 export default function app() {
-
-  //TODO Check if user log in 
-  // window.onbeforeunload = function(){
-  //     return true;
-  // }
 
   return (
     <ProvideAuth>
       <Router>
         <Switch>
-          <Route path="/login">
+          <Route exact path="/">
+            <Redirect to="/home" />
+          </Route>
+          <Route exact path="/login">
             <LoginPage authContext={authContext}/>
           </Route>
-          <Route path="/createuser">
+          <Route exact path="/createuser">
             <CreateUserPage authContext={authContext}/>
           </Route>
+          <Route exact path="/notfound">
+            <Result
+              status="404"
+              title="404"
+              subTitle="Sorry, the page you are looking for does not exist."
+              extra={
+              <Button type="primary" onClick={()=>(window.location.pathname='/home')}>
+                  Back Home
+              </Button>}
+            />
+          </Route>
 
-          <MainLayout
-            authContext={authContext}
-          >
-            {
-              PrivateRoutes.map(route => {
-                return (
-                  <PrivateRoute path={route.path} authContext={authContext}>
-                    <Suspense fallback={<div>loading...</div>}>
-                      <route.component authContext={authContext}/>
-                    </Suspense>
-                  </PrivateRoute>
-              )}
-              )
-            }
-          </MainLayout>
+          { PrivateRoutes.map((item)=>(item.path)).includes(window.location.pathname) &&
+            <MainLayout
+              authContext={authContext}
+            >
+              {
+                PrivateRoutes.map(route => {
+                  return (
+                    <PrivateRoute path={route.path} authContext={authContext}>
+                      <Suspense fallback={<div>loading...</div>}>
+                        <route.component authContext={authContext}/>
+                      </Suspense>
+                    </PrivateRoute>
+                )}
+                )
+              }
+            </MainLayout>
+          }
+          {
+            !PrivateRoutes.map((item)=>(item.path)).includes(window.location.pathname) &&
+            <Redirect to='/notfound'/>
+          }
         </Switch>
       </Router>
     </ProvideAuth>

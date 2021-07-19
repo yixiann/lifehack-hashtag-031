@@ -19,6 +19,8 @@ from rest_framework import routers
 from rest_framework_jwt.views import obtain_jwt_token
 from lifehack import views
 
+from rest_framework_jwt.views import refresh_jwt_token
+
 router = routers.DefaultRouter()
 router.register(r'user', views.UserView)
 router.register(r'test', views.TestView)
@@ -27,4 +29,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include(router.urls)),
     path('token-auth/', obtain_jwt_token),
+    path('token-auth-refresh/', refresh_jwt_token)
 ]
