@@ -57,9 +57,9 @@ const MainLayout = ({ children, authContext, ...props }) => {
         }
         </Button>
         <Dropdown overlay={menu}>
-          <Text style={{color: 'white'}}>
+          <Text style={{color: 'white', fontSize:'16px'}}>
             <UserOutlined style={{ marginRight: '5px', fontSize: '16px', color: 'white' }}/>
-            {username}
+              {username}
           </Text>
         </Dropdown>
       </Header>
