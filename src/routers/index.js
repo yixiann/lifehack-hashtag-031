@@ -15,7 +15,7 @@ const PrivateRoute = ({ children, authContext, ...rest }) => {
       exact
       {...rest}
       render={({ location }) =>
-        token && window.localStorage.getItem('token')!=''? (
+        token && window.localStorage.getItem('token')!==''? (
           children
         ) : (
           <Redirect
