@@ -56,7 +56,16 @@
   min-height: calc(100vh - 64px) !important
 }
 
-/* SWAL MODALS */S
+.fill-content{
+  min-height: calc(100vh - 64px) !important
+}
+
+/* Hide scroll bar */
+.hide-scroll::-webkit-scrollbar {
+  display: none;
+}
+
+/* SWAL MODALS */
 .success-swal {
   font-family: Calibri, sans-serif;
   box-shadow: 0px 0px 10px 5px grey;
