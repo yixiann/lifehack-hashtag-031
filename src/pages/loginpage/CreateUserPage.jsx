@@ -1,10 +1,10 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React from 'react';
 import { useHistory, useLocation } from "react-router-dom";
-import { Button, Row, Col, Form, Input, Checkbox } from 'antd';
+import { Button, Row, Col, Form, Input } from 'antd';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
 import axios from 'axios';
 import URI, { convertToFormData } from '../../constants/URL'
-import { confirmationModal, errorModal, successModal } from '../../components/UI/submissionModal';
+import { successModal } from '../../components/UI/submissionModal';
 import { Link } from 'react-router-dom';
 
 export const CreateUserPage = ({
