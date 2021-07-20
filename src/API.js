@@ -1,8 +1,8 @@
-// import React, { createContext } from 'react'
-// import axios from "axios"
+import axios from "axios"
 
-// const authContext = createContext();
-// console.log("AuthContext", authContext)
-// export default axios.create({
-//   responseType: "json"
-// })
+export default axios.create({
+  headers: {
+    'Content-Type': 'application/json',
+    'Authorization': 'jwt '.concat(window.localStorage.getItem('token'))
+  }
+})
