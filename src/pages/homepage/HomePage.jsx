@@ -15,9 +15,9 @@ export const HomePage = ({
   var auth = useAuth();
 
   var { token, user } = auth
+
   // console.log("TOKEN",token)
   // console.log("USER", user)
-
 
   const { Title } = Typography
 
@@ -85,10 +85,7 @@ export const HomePage = ({
       text: "Are you sure?",
       titleLoading: "Loading",
       functionCalled: submitTest,
-      data: {
-        ...e,
-        token: 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjo5LCJ1c2VybmFtZSI6ImhlbGxvIiwiZXhwIjoxNjI1NzI0NDUxLCJlbWFpbCI6IiJ9.nDNBHhxzT_97R1p8PoEwxYl5PYDnqOurNEmyphz2DzY'
-      }
+      data: e
     })
   }
   

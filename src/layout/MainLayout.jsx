@@ -25,10 +25,12 @@ const MainLayout = ({ children, authContext, ...props }) => {
     if(username!==auth.user){
       setUsername(auth.user)
     }
-  },[username])
+  },[username, auth])
 
   const handleLogout = () => {
     auth.signout(() => history.push("/login"))
+    window.localStorage.setItem('token', '')
+    window.localStorage.setItem('username', '')
   }
 
   const menu = (

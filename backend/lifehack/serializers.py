@@ -21,7 +21,7 @@ class TestSerializer(serializers.ModelSerializer):
 class ChatSerializer(serializers.ModelSerializer):
     class Meta:
         model = Chat
-        fields = ('id', 'fromAddress', 'toAddress', 'text', 'date')
+        fields = ('id', 'fromAddress', 'toAddress', 'text', 'date', 'attachments')
 
 # For handling signups
 class UserSerializerWithToken(serializers.ModelSerializer):
