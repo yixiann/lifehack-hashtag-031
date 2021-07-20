@@ -77,7 +77,15 @@ export const ChatPage = ({
   const customUpload = options => {
     const { onSuccess, onError, file, onProgress } = options
 
-    // const fmData = new FormData();
+    const fmData = new FormData();
+    // // const config = {}
+    // fmData.append("image", file);
+    // axios.post("endpoint", fmData, 
+    // // config
+    // )
+    // .then()
+    // .catch()
+    // // const fmData = new FormData();
     const config = { headers: { 
     "content-type": "multipart/form-data",      
     'Authorization': 'jwt '.concat(token)
