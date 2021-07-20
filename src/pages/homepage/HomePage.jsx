@@ -2,6 +2,7 @@ import React, { useEffect, useState, useContext } from 'react';
 import { Button, Table, Form, Input, Typography } from 'antd';
 import axios from 'axios';
 import URI, { convertToFormData } from '../../constants/URL'
+import API from '../../API'
 import { confirmationModal, errorModal, successModal } from '../../components/UI/submissionModal';
 export const HomePage = ({
   authContext,
@@ -29,13 +30,8 @@ export const HomePage = ({
 
   const fetchAllTest = () => {
     setLoading(true)
-    const headers = {
-      'Content-Type': 'application/json',
-      'Authorization': 'jwt '.concat(token)
-    }
-    axios.get(URI.test, {
-      headers: headers
-    }).then((res) => {
+    API.get(URI.test)
+    .then((res) => {
       setData(res.data.reverse())
       setLoading(false)
     })
@@ -47,12 +43,7 @@ export const HomePage = ({
   }
 
   const submitTest = (data) => {
-    const headers = {
-      'Content-Type': 'application/json',
-      'Authorization': 'jwt '.concat(token)
-    }
-    axios.post(URI.test, convertToFormData(data), {
-      headers: headers
+    API.post(URI.test, convertToFormData(data), {
     }).then(()=>{
       successModal("Successfully submitted")
       fetchAllTest()
