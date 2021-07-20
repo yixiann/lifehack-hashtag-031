@@ -24,3 +24,16 @@ yarn-error.log*
 
 *db.sqlite3
 !**__pycache__
+**/__pycache__
+**/*.pyc
+backend/db.sqlite3
+backend/lifehack/__pycache__/__init__.cpython-39.pyc
+backend/lifehack/__pycache__/admin.cpython-39.pyc
+backend/lifehack/__pycache__/apps.cpython-39.pyc
+backend/lifehack/__pycache__/models.cpython-39.pyc
+backend/lifehack/__pycache__/serializers.cpython-39.pyc
+backend/lifehack/__pycache__/views.cpython-39.pyc
+backend/lifehack/migrations/__pycache__/__init__.cpython-39.pyc
+backend/lifehack/migrations/__pycache__/0001_initial.cpython-39.pyc
+backend/lifehack/migrations/__pycache__/0002_chat.cpython-39.pyc
+backend/lifehack/migrations/__pycache__/0003_chat_attachments.cpython-39.pyc
