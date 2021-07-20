@@ -77,14 +77,22 @@ export const ChatPage = ({
   const customUpload = options => {
     const { onSuccess, onError, file, onProgress } = options
 
-    const fmData = new FormData();
-    // const config = {}
-    fmData.append("image", file);
-    axios.post("endpoint", fmData, 
-    // config
-    )
-    .then()
-    .catch()
+    // const fmData = new FormData();
+    const config = { headers: { 
+    "content-type": "multipart/form-data",      
+    'Authorization': 'jwt '.concat(token)
+  }}
+    // fmData.append("image", file);
+    axios.post("api/chat/",  convertToFormData({toAddress: selectedUserId, text: "space",fromAddress: user, attachments: file}), config)
+    .then(resp => {
+      console.log(resp)
+      onSuccess(file);
+    })
+    .catch(err => {
+      console.log(err)
+      const error = new Error('Some error');
+      onError({event:error});
+    })
   }
 
   return (
@@ -120,7 +128,7 @@ export const ChatPage = ({
         </Row>
       </Form>
       <Upload
-      action={customUpload}
+      customRequest={customUpload}
       >
         <Button icon={<UploadOutlined />}>Upload</Button>
       </Upload>
