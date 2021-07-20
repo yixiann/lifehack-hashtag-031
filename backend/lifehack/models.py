@@ -17,6 +17,7 @@ class Chat(models.Model):
     toAddress = models.CharField(max_length=120)
     text = models.CharField(max_length=1000)
     date = models.DateTimeField(auto_now_add=True)
+    attachments = models.FileField(null=True, default=None)
 
     def __str__ (self):
-        return f'From: {self.fromAddress} To: {self.toAddress} Text: {self.text} Date: {str(self.date)}'
+        return f'From: {self.fromAddress} To: {self.toAddress} Text: {self.text} Date: {str(self.date)} Attachments: {self.attachments}'

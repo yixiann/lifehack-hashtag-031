@@ -9,7 +9,7 @@ class TestAdmin(admin.ModelAdmin):
     list_display = ('text', 'number')
 
 class ChatAdmin(admin.ModelAdmin):
-    list_display = ('fromAddress', 'toAddress', 'text', 'date')
+    list_display = ('fromAddress', 'toAddress', 'text', 'date', 'attachments')
 
 # Register your models here.
 admin.site.register(User, UserAdmin)

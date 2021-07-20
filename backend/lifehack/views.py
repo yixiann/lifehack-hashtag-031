@@ -1,6 +1,7 @@
 from rest_framework import viewsets, permissions, status
 from rest_framework.views import APIView
 from rest_framework.response import Response
+from rest_framework.parsers import MultiPartParser
 from .serializers import UserSerializer, TestSerializer, ChatSerializer, UserSerializerWithToken
 from .models import User, Test, Chat
 
@@ -14,6 +15,7 @@ class TestView(viewsets.ModelViewSet):
     queryset = Test.objects.all()
 
 class ChatView(viewsets.ModelViewSet):
+    parser_classes = [MultiPartParser]
     serializer_class = ChatSerializer
     queryset = Chat.objects.all()
 
