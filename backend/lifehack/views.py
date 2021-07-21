@@ -1,4 +1,7 @@
 from rest_framework import viewsets, permissions, status
+from django.shortcuts import render
+
+from PIL import Image
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.parsers import MultiPartParser
