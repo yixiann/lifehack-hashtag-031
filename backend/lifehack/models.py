@@ -30,7 +30,8 @@ class App (models.Model):
     no = models.CharField(max_length=120, blank=True)
     toofast = models.CharField(max_length=120, blank=True)
     tooslow = models.CharField(max_length=120, blank=True)
-    comments = models.CharField(max_length=10000, blank=True)
+    comments = models.CharField(max_length=1000, blank=True)
+    attachments = models.ImageField(upload_to='attachments', blank=True, null=True)
     fromAddress = models.CharField(max_length=120)
 
     def __str__ (self):
