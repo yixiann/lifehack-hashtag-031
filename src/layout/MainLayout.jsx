@@ -29,8 +29,7 @@ const MainLayout = ({ children, authContext, ...props }) => {
 
   const handleLogout = () => {
     auth.signout(() => history.push("/login"))
-    window.localStorage.setItem('token', '')
-    window.localStorage.setItem('username', '')
+    window.localStorage.clear()
   }
 
   const menu = (

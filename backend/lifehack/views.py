@@ -2,8 +2,8 @@ from rest_framework import viewsets, permissions, status
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.parsers import MultiPartParser
-from .serializers import UserSerializer, TestSerializer, ChatSerializer, UserSerializerWithToken, AppSerializer, CalendarSerializer
-from .models import User, Test, Chat, App, Calendar
+from .serializers import UserSerializer, TestSerializer, ChatSerializer, UserSerializerWithToken, AppSerializer, ClassSerializer
+from .models import User, Test, Chat, App, Class
 
 # Create your views here.
 class UserView(viewsets.ModelViewSet):
@@ -19,13 +19,23 @@ class ChatView(viewsets.ModelViewSet):
     serializer_class = ChatSerializer
     queryset = Chat.objects.all()
 
+class ClassView(viewsets.ModelViewSet):
+    serializer_class = ClassSerializer
+    queryset = Class.objects.all()
+
+class LessonView(viewsets.ReadOnlyModelViewSet):
+    serializer_class = ClassSerializer
+    queryset = Class.objects.all()
+    lookup_field = "createdby"
+
+class ClassLessonView(viewsets.ReadOnlyModelViewSet):
+    serializer_class = ClassSerializer
+    queryset = Class.objects.all()
+    lookup_field = "classid"
+
 class AppView(viewsets.ModelViewSet):
     serializer_class = AppSerializer
     queryset = App.objects.all()
-
-class CalendarView(viewsets.ModelViewSet):
-    serializer_class = CalendarSerializer
-    queryset = Calendar.objects.all()
 
 class UserList(APIView):
     permission_classes = (permissions.AllowAny,)

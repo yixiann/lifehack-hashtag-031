@@ -1,171 +1,13 @@
-// import React, { useContext, useState, useEffect } from 'react';
-// import { useHistory, useLocation } from "react-router-dom";
-// import { Button, Row, Col, Form, Input } from 'antd';
-// import { UserOutlined, LockOutlined } from '@ant-design/icons';
-// import axios from 'axios';
-// import URI, { convertToFormData } from '../../constants/URL'
-
-// export const LoginPage = ({
-//   authContext,
-//   ...props
-// }) => {
-
-//   const useAuth = () => {
-//     return useContext(authContext);
-//   }
-
-//   var history = useHistory();
-//   var location = useLocation();
-//   var auth = useAuth();
-  
-//   const [form] = Form.useForm()
-
-//   const [ incorrect, setIncorrect ] = useState(false)
-
-//   const [ token, setToken ] = useState("")
-
-//   const [ checkToken, setCheckToken ] = useState(false)
-
-//   const signInAxios = (values) => {
-//     var tokenData = axios
-//       .post(URI.signIn, convertToFormData(values))
-//       .then((res)=>{
-//         return res.data.token
-//       }).catch((err) => {
-//         console.log("ERROR", err)
-//       });
-//     return tokenData
-//   }
-
-//   async function login(){
-//     var { from } = location.state || { from: { pathname: "/home" } };
-//     var values = form.getFieldsValue()
-//     if(values){
-//       var token = await signInAxios(values)
-//       if(token){
-//         auth.signin(() => {
-//           history.replace(from);
-//           return {
-//             username: values.username,
-//             token
-//           }
-//         })
-//       } else {
-//         setIncorrect(true)
-//       }
-//     }
-//     window.localStorage.setItem('username', values.username)
-//     window.localStorage.setItem('token', token);
-//   };
-
-//   // If there is a token stored in local storage, use token to get new token
-//   useEffect(()=>{
-//     var token = window.localStorage.getItem('token')
-//     if(!!token){
-//       const headers = {'Content-Type': 'application/json',}
-//       axios
-//       .post(URI.signInRefresh, {token}, {headers})
-//       .then((res)=>{
-//         setToken(res?.data?.token)
-//         window.localStorage.setItem('token', res?.data?.token);
-//       }).catch((err) => {
-//         console.log("ERROR", err)
-//         setCheckToken(true)
-//       });
-//     } else {
-//       setCheckToken(true)
-//     }
-//   },[])
-
-//   // If there is a token, sign in
-//   useEffect(()=>{
-//     var { from } = location.state || { from: { pathname: "/home" } };
-//     if(token){
-//       auth.signin(() => {
-//         history.replace(from);
-//         return {
-//           username: window.localStorage.getItem('username'),
-//           token
-//         }
-//       })
-//     }
-//   },[token])
-
-//   const LoginComponent = ({style}) => {
-//     return (
-//       <div style={style}>
-//       { checkToken &&
-//         <Row justify="center" align="middle" style={{height: 'inherit'}}>
-//           <Col>
-//             <Form
-//               form={form}
-//               name="login"
-//             >
-//               <Form.Item
-//                 name="username"
-//                 rules={[{required: true, message: 'Please input your Username!' }]}
-//               >
-//                 <Input
-//                   prefix={<UserOutlined/>}
-//                   placeholder="Username"
-//                 />
-//               </Form.Item>
-//               <Form.Item
-//                 name="password"
-//                 rules={[{required: true, message: 'Please input your Password!' }]}
-//               >
-//                 <Input
-//                   prefix={<LockOutlined/>}
-//                   type="password"
-//                   placeholder="Password"
-//                 />
-//               </Form.Item>
-//               {
-//                 incorrect &&
-//                 <p style={{color:'red', margin:'0px', padding: '0px'}}>Incorrect Username or Password</p>
-//               }
-//               <Form.Item>
-//               <Button 
-//                 type="primary"
-//                 onClick={()=>(form.validateFields().then(login()))}
-//                 style={{alignItems: 'center', width: "-webkit-fill-available"}}
-//               >
-//                 Log in
-//               </Button>
-//               Or <a href="/createuser">register now!</a>
-//               </Form.Item>
-//             </Form>
-//           </Col>
-//         </Row>
-//       }
-//       </div>
-//     )
-//   }
-
-//   return (
-//     <div style={{alignContent:'center', justifyContent:'center'}}>
-//       <LoginComponent
-//         style={{backgroundColor:'blue', width:'250px', padding: '25px 0px 0px 0px'}}
-//       />
-//     </div>
-//   );
-// }
-
-// export default LoginPage
-
-// Need to do validation
-// Need to get form field values
-
 import React, { useContext, useState, useEffect } from 'react';
 import { useHistory, useLocation } from "react-router-dom";
-import { Form } from 'antd';
+import { Form, Input, Menu, Select, Dropdown } from 'antd';
 import axios from 'axios';
-import URI, { convertToFormData } from '../../constants/URL'
+import URI, { convertToFormData } from '../../constants/URL';
+import {  DownOutlined, UserOutlined,  EyeInvisibleOutlined, EyeTwoTone } from '@ant-design/icons';
 
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import TextField from '@material-ui/core/TextField';
 import Link from '@material-ui/core/Link';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
@@ -226,6 +68,8 @@ const LoginPage = ({
   var history = useHistory();
   var location = useLocation();
   var auth = useAuth();
+
+  const { Option } = Select
   
   const [form] = Form.useForm()
 
@@ -247,8 +91,9 @@ const LoginPage = ({
   }
 
   async function login(){
-    var { from } = location.state || { from: { pathname: "/home" } };
+    var { from } = location.state || { from: { pathname: `/${window.localStorage.getItem('role')}/dashboard` } };
     var values = form.getFieldsValue()
+    console.log("VA", values)
     if(values){
       var token = await signInAxios(values)
       if(token){
@@ -322,39 +167,34 @@ const LoginPage = ({
               {/* <form className={classes.form} noValidate> */}
                 <Form.Item
                   name="username"
-                  // rules={[{required: true, message: 'Please input your Username!' }]}
+                  rules={[{required: true, message: 'Please input your Username!' }]}
                 >
-                  <TextField
-                    inputProps={{style: {fontSize: 16}}} // font size of input text
-                    InputLabelProps={{style: {fontSize: 16, backgroundColor: 'white'}}} // font size of input label
-                    variant="outlined"
-                    margin="normal"
-                    required
-                    fullWidth
-                    id="username"
-                    label="Username"
-                    name="username"
-                    autoComplete="username"
-                    autoFocus
+                  <Input
+                    placeHolder={'Username'}
+                    size={'large'}
                   />
                 </Form.Item>
                 <Form.Item
                   name="password"
-                  // rules={[{required: true, message: 'Please input your Password!' }]}
+                  rules={[{required: true, message: 'Please input your Password!' }]}
                 >
-                  <TextField
-                    inputProps={{style: {fontSize: 16}}} // font size of input text
-                    InputLabelProps={{style: {fontSize: 16, backgroundColor: 'white'}}} // font size of input label
-                    variant="outlined"
-                    margin="normal"
-                    required
-                    fullWidth
-                    name="password"
-                    label="Password"
-                    type="password"
-                    id="password"
-                    autoComplete="current-password"
+                  <Input.Password
+                    placeHolder={'Password'}
+                    size={'large'}
+                    iconRender={visible => (visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />)}
                   />
+                </Form.Item>
+                <Form.Item
+                  name="role"
+                >
+                  <Select
+                    onSelect={(e)=>(window.localStorage.setItem('role',e))}
+                    placeholder="Select a role"
+                    size='large'
+                  >
+                    <Option value={"student"}>Student</Option>
+                    <Option value={"teacher"}>Teacher</Option>
+                  </Select>
                 </Form.Item>
                 <Button
                   fullWidth
@@ -372,7 +212,6 @@ const LoginPage = ({
                     </Link>
                   </Grid>
                 </Grid>
-              {/* </form> */}
               </Form>
             </div>
           </Grid>

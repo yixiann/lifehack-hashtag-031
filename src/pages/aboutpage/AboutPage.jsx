@@ -4,7 +4,7 @@ import { UploadOutlined } from '@ant-design/icons';
 import { useHistory } from 'react-router-dom';
 
 
-export const AboutPage = ({
+const AboutPage = ({
   ...props
 }) => { 
 

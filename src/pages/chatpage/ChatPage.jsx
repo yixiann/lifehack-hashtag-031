@@ -120,16 +120,14 @@ export const ChatPage = ({
         style={{
           border: 'solid black 1px',
           borderRadius: '3px',
-          margin: '5px'
+          margin: '5px',
+          padding: '5px',
+          wordWrap: 'normal',
+          whiteSpace: 'pre-wrap',
+          wordBreak: 'break-word',
         }}
       >
-        <p 
-          style={{
-            padding: '5px'
-          }}
-        >
-          {text}
-        </p>
+        {text}
       </div>
     )
   }

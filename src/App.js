@@ -26,7 +26,7 @@ export default function app() {
           <Route exact path="/createuser">
             <CreateUserPage authContext={authContext}/>
           </Route>
-          <Route exact path="/notfound">
+          {/* <Route exact path="/notfound">
             <Result
               status="404"
               title="404"
@@ -36,8 +36,7 @@ export default function app() {
                   Back Home
               </Button>}
             />
-          </Route>
-
+          </Route> */}
           { PrivateRoutes.map((item)=>(item.path)).includes(window.location.pathname) &&
             <MainLayout
               authContext={authContext}
@@ -55,10 +54,10 @@ export default function app() {
               }
             </MainLayout>
           }
-          {
+          {/* {
             !PrivateRoutes.map((item)=>(item.path)).includes(window.location.pathname) &&
             <Redirect to='/notfound'/>
-          }
+          } */}
         </Switch>
       </Router>
     </ProvideAuth>

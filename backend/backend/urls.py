@@ -20,7 +20,6 @@ from django.conf.urls.static import static
 from django.conf import settings
 from rest_framework_jwt.views import obtain_jwt_token
 from lifehack import views
-
 from rest_framework_jwt.views import refresh_jwt_token
 
 router = routers.DefaultRouter()
@@ -28,7 +27,9 @@ router.register(r'user', views.UserView)
 router.register(r'test', views.TestView)
 router.register(r'chat', views.ChatView)
 router.register(r'app', views.AppView)
-router.register(r'calendar', views.CalendarView)
+router.register(r'class', views.ClassView)
+router.register(r'class/fetchlesson', views.LessonView)
+router.register(r'class/fetchclass', views.ClassLessonView)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
