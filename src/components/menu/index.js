@@ -9,18 +9,23 @@ const SiderBar = ({ ...props }) => {
       mode="inline"
     >
       <Menu.Item key={'home'}>
-        <Link to={'/home'}>
-          Home Page
+        <Link to={`/${window.localStorage.getItem('role')}/dashboard`}>
+          Dashboard
         </Link>
       </Menu.Item>
       <Menu.Item key={'chat'}>
-        <Link to={'/chat'}>
-          Chat Page
+        <Link to={`/${window.localStorage.getItem('role')}/chat`}>
+          Chat
         </Link>
       </Menu.Item>
       <Menu.Item key={'about'}>
-        <Link to={'/about'}>
-          About Page
+        <Link to={`/${window.localStorage.getItem('role')}/about`}>
+          About
+        </Link>
+      </Menu.Item>
+      <Menu.Item key={'lessondata'}>
+        <Link to={'/lessondata'}>
+          Lesson Data Dashboard
         </Link>
       </Menu.Item>
     </Menu>
