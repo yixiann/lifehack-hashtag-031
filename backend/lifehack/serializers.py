@@ -1,7 +1,7 @@
 from django.contrib.auth.hashers import make_password
 from rest_framework import serializers
 from rest_framework_jwt.settings import api_settings
-from .models import User, Test, Chat
+from .models import User, Test, Chat, App, Class
 
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
@@ -21,7 +21,7 @@ class TestSerializer(serializers.ModelSerializer):
 class ChatSerializer(serializers.ModelSerializer):
     class Meta:
         model = Chat
-        fields = ('id', 'fromAddress', 'toAddress', 'text', 'date', 'attachments')
+        fields = ('id', 'fromAddress', 'toAddress', 'text', 'date', 'comments', 'attachments')
 
 # For handling signups
 class UserSerializerWithToken(serializers.ModelSerializer):
@@ -47,3 +47,13 @@ class UserSerializerWithToken(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ('token', 'username', 'password')
+
+class ClassSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Class
+        fields = ('classid', 'zoomlink', 'teacher', 'subject', 'remarks', 'datestart', 'dateend')
+
+class AppSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = App
+        fields = ('classid', 'yes', 'no', 'toofast', 'tooslow', 'comments', 'attachments', 'fromAddress')
