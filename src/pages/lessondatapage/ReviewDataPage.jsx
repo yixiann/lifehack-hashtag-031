@@ -1,11 +1,7 @@
-import React, { useEffect, useState, useContext } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom';
 import { Button, Table, Tabs, Slider, Row, Col, Modal, Typography, List, Card } from 'antd';
-import axios from 'axios';
-import URI, { convertToFormData } from '../../constants/URL'
-import API from '../../API'
-import { confirmationModal, errorModal, successModal } from '../../components/UI/submissionModal';
-import { Chart,Axis,Tooltip,Coordinate, Interval, Point, Line} from "bizcharts";
+import { Chart,Axis,Tooltip,Coordinate, Interval, Point, Line, getTheme, Interaction} from "bizcharts";
 import DataSet from '@antv/data-set';
 
 import moment from 'moment';
@@ -14,13 +10,11 @@ function ReviewDataPage(props) {
 
   const classId = new URLSearchParams(window.location.search).get('classId');
 
-  console.log(classId)
-
   const [ visible, setVisible ] = useState(false)
 
-  const { Title, Text } = Typography
+  const [ classVisible, setClassVisible ] = useState(false)
 
-  const [ dataClass, setDataClass ] = useState([])
+  const { Title } = Typography
 
   const { TabPane } = Tabs;
 
@@ -85,6 +79,22 @@ function ReviewDataPage(props) {
     {name: 'Zhuo Yi Xin ',class:'3E1', gender:'Male', result:'72', grade: 'A2'},
   ]
 
+  const dataLessonClass = [
+		{ item: 'I understand', count: 40, percent: 0.4 },
+		{ item: 'I am lost', count: 21, percent: 0.21 },
+		{ item: 'Slow Down', count: 17, percent: 0.17 },
+		{ item: 'Speed Up', count: 13, percent: 0.13 },
+	];
+
+	const cols = {
+		percent: {
+			formatter: val => {
+				val = val * 100 + '%';
+				return val;
+			},
+		},
+	};
+
   function getRandomInt(max) {
     return Math.floor(Math.random() * max);
   }
@@ -107,11 +117,11 @@ function ReviewDataPage(props) {
     // {State: "29-06-21","I understand": getRandomInt(10),"I am lost": getRandomInt(10), "Slow Down": getRandomInt(10), "Speed Up": getRandomInt(10)},
     // {State: "30-06-21","I understand": getRandomInt(10),"I am lost": getRandomInt(10), "Slow Down": getRandomInt(10), "Speed Up": getRandomInt(10)},
     // {State: "01-07-21","I understand": getRandomInt(10),"I am lost": getRandomInt(10), "Slow Down": getRandomInt(10), "Speed Up": getRandomInt(10)},
-    // {State: "02-07-21","I understand": getRandomInt(10),"I am lost": getRandomInt(10), "Slow Down": getRandomInt(10), "Speed Up": getRandomInt(10)},
-    // {State: "03-07-21","I understand": getRandomInt(10),"I am lost": getRandomInt(10), "Slow Down": getRandomInt(10), "Speed Up": getRandomInt(10)},
-    // {State: "04-07-21","I understand": getRandomInt(10),"I am lost": getRandomInt(10), "Slow Down": getRandomInt(10), "Speed Up": getRandomInt(10)},
-    // {State: "05-07-21","I understand": getRandomInt(10),"I am lost": getRandomInt(10), "Slow Down": getRandomInt(10), "Speed Up": getRandomInt(10)},
-    // {State: "06-07-21","I understand": getRandomInt(10),"I am lost": getRandomInt(10), "Slow Down": getRandomInt(10), "Speed Up": getRandomInt(10)},
+    {State: "02-07-21","I understand": getRandomInt(10),"I am lost": getRandomInt(10), "Slow Down": getRandomInt(10), "Speed Up": getRandomInt(10)},
+    {State: "03-07-21","I understand": getRandomInt(10),"I am lost": getRandomInt(10), "Slow Down": getRandomInt(10), "Speed Up": getRandomInt(10)},
+    {State: "04-07-21","I understand": getRandomInt(10),"I am lost": getRandomInt(10), "Slow Down": getRandomInt(10), "Speed Up": getRandomInt(10)},
+    {State: "05-07-21","I understand": getRandomInt(10),"I am lost": getRandomInt(10), "Slow Down": getRandomInt(10), "Speed Up": getRandomInt(10)},
+    {State: "06-07-21","I understand": getRandomInt(10),"I am lost": getRandomInt(10), "Slow Down": getRandomInt(10), "Speed Up": getRandomInt(10)},
     {State: "07-07-21","I understand": getRandomInt(10),"I am lost": getRandomInt(10), "Slow Down": getRandomInt(10), "Speed Up": getRandomInt(10)},
     {State: "08-07-21","I understand": getRandomInt(10),"I am lost": getRandomInt(10), "Slow Down": getRandomInt(10), "Speed Up": getRandomInt(10)},
     {State: "09-07-21","I understand": getRandomInt(10),"I am lost": getRandomInt(10), "Slow Down": getRandomInt(10), "Speed Up": getRandomInt(10)},
@@ -152,9 +162,9 @@ function ReviewDataPage(props) {
     // {date: "01-07-21", subject: subjectList[getRandomInt(9)], topic: `Chapter ${getRandomInt(10)+1}`, score: `${getRandomInt(100)}/100`},
     // {date: "02-07-21", subject: subjectList[getRandomInt(9)], topic: `Chapter ${getRandomInt(10)+1}`, score: `${getRandomInt(100)}/100`},
     // {date: "03-07-21", subject: subjectList[getRandomInt(9)], topic: `Chapter ${getRandomInt(10)+1}`, score: `${getRandomInt(100)}/100`},
-    // {date: "04-07-21", subject: subjectList[getRandomInt(9)], topic: `Chapter ${getRandomInt(10)+1}`, score: `${getRandomInt(100)}/100`},
-    // {date: "05-07-21", subject: subjectList[getRandomInt(9)], topic: `Chapter ${getRandomInt(10)+1}`, score: `${getRandomInt(100)}/100`},
-    // {date: "06-07-21", subject: subjectList[getRandomInt(9)], topic: `Chapter ${getRandomInt(10)+1}`, score: `${getRandomInt(100)}/100`},
+    {date: "04-07-21", subject: subjectList[getRandomInt(9)], topic: `Chapter ${getRandomInt(10)+1}`, score: `${getRandomInt(100)}/100`},
+    {date: "05-07-21", subject: subjectList[getRandomInt(9)], topic: `Chapter ${getRandomInt(10)+1}`, score: `${getRandomInt(100)}/100`},
+    {date: "06-07-21", subject: subjectList[getRandomInt(9)], topic: `Chapter ${getRandomInt(10)+1}`, score: `${getRandomInt(100)}/100`},
     {date: "07-07-21", subject: subjectList[getRandomInt(9)], topic: `Chapter ${getRandomInt(10)+1}`, score: `${getRandomInt(100)}/100`},
     {date: "08-07-21", subject: subjectList[getRandomInt(9)], topic: `Chapter ${getRandomInt(10)+1}`, score: `${getRandomInt(100)}/100`},
     {date: "09-07-21", subject: subjectList[getRandomInt(9)], topic: `Chapter ${getRandomInt(10)+1}`, score: `${getRandomInt(100)}/100`},
@@ -179,6 +189,15 @@ function ReviewDataPage(props) {
     return item.State
   })
 
+  const alertDataSource = [
+    {name: 'Poon Jia De ',class:'3E1', iAmLost: 18, slowDown: 17, grade: 'E8'},
+    {name: 'Umasundari Salleh',class:'3E1', iAmLost: 11, slowDown: 19, grade: 'D7'},
+    {name: 'Woo Jun Jie ',class:'3E1', iAmLost: 10, slowDown: 18, grade: 'D7'},
+    {name: 'Lye Jia Sheng ',class:'3E1', iAmLost: 9, slowDown: 15, grade: 'D7'},
+    {name: 'Cheng Wen Kai ',class:'3E1', iAmLost: 11, slowDown: 6, grade: 'C5'},
+  ]
+
+  const [ dataClass, setDataClass ] = useState(dataQuestions)
 
   useEffect(()=>{
     if(!dataClass){
@@ -195,6 +214,239 @@ function ReviewDataPage(props) {
     value: "人口数量",
     retains: ["State"]
   });
+
+  
+  let chartIns;
+  const [datas, setDatas] = useState();
+  useEffect(() => {
+    // fetch('https://alifd.alibabausercontent.com/materials/@bizcharts/point-scatter/0.2.8/mock.json')
+    //   .then(res => res.json())
+    //   .then(data => {
+    //     console.log(data)
+    //     setDatas(data?.slice(10));
+    //   })
+    const newDatas = [
+      {type: "I am lost", time: getRandomInt(50), student: data[getRandomInt(25)].name},
+      {type: "I understand", time: getRandomInt(50), student: data[getRandomInt(25)].name},
+      {type: "Slow down", time: getRandomInt(50), student: data[getRandomInt(25)].name},
+      {type: "Speed up", time: getRandomInt(50), student: data[getRandomInt(25)].name},
+      {type: "I am lost", time: getRandomInt(50), student: data[getRandomInt(25)].name},
+      {type: "I understand", time: getRandomInt(50), student: data[getRandomInt(25)].name},
+      {type: "Slow down", time: getRandomInt(50), student: data[getRandomInt(25)].name},
+      {type: "Speed up", time: getRandomInt(50), student: data[getRandomInt(25)].name},
+      {type: "I am lost", time: getRandomInt(50), student: data[getRandomInt(25)].name},
+      {type: "I understand", time: getRandomInt(50), student: data[getRandomInt(25)].name},
+      {type: "Slow down", time: getRandomInt(50), student: data[getRandomInt(25)].name},
+      {type: "Speed up", time: getRandomInt(50), student: data[getRandomInt(25)].name},
+      {type: "I am lost", time: getRandomInt(50), student: data[getRandomInt(25)].name},
+      {type: "I understand", time: getRandomInt(50), student: data[getRandomInt(25)].name},
+      {type: "Slow down", time: getRandomInt(50), student: data[getRandomInt(25)].name},
+      {type: "Speed up", time: getRandomInt(50), student: data[getRandomInt(25)].name},
+      {type: "I am lost", time: getRandomInt(50), student: data[getRandomInt(25)].name},
+      {type: "I understand", time: getRandomInt(50), student: data[getRandomInt(25)].name},
+      {type: "Slow down", time: getRandomInt(50), student: data[getRandomInt(25)].name},
+      {type: "Speed up", time: getRandomInt(50), student: data[getRandomInt(25)].name},
+      {type: "I am lost", time: getRandomInt(50), student: data[getRandomInt(25)].name},
+      {type: "I understand", time: getRandomInt(50), student: data[getRandomInt(25)].name},
+      {type: "Slow down", time: getRandomInt(50), student: data[getRandomInt(25)].name},
+      {type: "Speed up", time: getRandomInt(50), student: data[getRandomInt(25)].name},
+      {type: "I am lost", time: getRandomInt(50), student: data[getRandomInt(25)].name},
+      {type: "I understand", time: getRandomInt(50), student: data[getRandomInt(25)].name},
+      {type: "Slow down", time: getRandomInt(50), student: data[getRandomInt(25)].name},
+      {type: "Speed up", time: getRandomInt(50), student: data[getRandomInt(25)].name},
+      {type: "I am lost", time: getRandomInt(50), student: data[getRandomInt(25)].name},
+      {type: "I understand", time: getRandomInt(50), student: data[getRandomInt(25)].name},
+      {type: "Slow down", time: getRandomInt(50), student: data[getRandomInt(25)].name},
+      {type: "Speed up", time: getRandomInt(50), student: data[getRandomInt(25)].name},
+      {type: "I am lost", time: getRandomInt(50), student: data[getRandomInt(25)].name},
+      {type: "I understand", time: getRandomInt(50), student: data[getRandomInt(25)].name},
+      {type: "Slow down", time: getRandomInt(50), student: data[getRandomInt(25)].name},
+      {type: "Speed up", time: getRandomInt(50), student: data[getRandomInt(25)].name},
+      {type: "I am lost", time: getRandomInt(50), student: data[getRandomInt(25)].name},
+      {type: "I understand", time: getRandomInt(50), student: data[getRandomInt(25)].name},
+      {type: "Slow down", time: getRandomInt(50), student: data[getRandomInt(25)].name},
+      {type: "Speed up", time: getRandomInt(50), student: data[getRandomInt(25)].name},
+      {type: "I am lost", time: getRandomInt(50), student: data[getRandomInt(25)].name},
+      {type: "I understand", time: getRandomInt(50), student: data[getRandomInt(25)].name},
+      {type: "Slow down", time: getRandomInt(50), student: data[getRandomInt(25)].name},
+      {type: "Speed up", time: getRandomInt(50), student: data[getRandomInt(25)].name},
+      {type: "I am lost", time: getRandomInt(50), student: data[getRandomInt(25)].name},
+      {type: "I understand", time: getRandomInt(50), student: data[getRandomInt(25)].name},
+      {type: "Slow down", time: getRandomInt(50), student: data[getRandomInt(25)].name},
+      {type: "Speed up", time: getRandomInt(50), student: data[getRandomInt(25)].name},
+      {type: "I am lost", time: getRandomInt(50), student: data[getRandomInt(25)].name},
+      {type: "I understand", time: getRandomInt(50), student: data[getRandomInt(25)].name},
+      {type: "Slow down", time: getRandomInt(50), student: data[getRandomInt(25)].name},
+      {type: "Speed up", time: getRandomInt(50), student: data[getRandomInt(25)].name},
+      {type: "I am lost", time: getRandomInt(50), student: data[getRandomInt(25)].name},
+      {type: "I understand", time: getRandomInt(50), student: data[getRandomInt(25)].name},
+      {type: "Slow down", time: getRandomInt(50), student: data[getRandomInt(25)].name},
+      {type: "Speed up", time: getRandomInt(50), student: data[getRandomInt(25)].name},
+      {type: "I am lost", time: getRandomInt(50), student: data[getRandomInt(25)].name},
+      {type: "I understand", time: getRandomInt(50), student: data[getRandomInt(25)].name},
+      {type: "Slow down", time: getRandomInt(50), student: data[getRandomInt(25)].name},
+      {type: "Speed up", time: getRandomInt(50), student: data[getRandomInt(25)].name},
+      {type: "I am lost", time: getRandomInt(50), student: data[getRandomInt(25)].name},
+      {type: "I understand", time: getRandomInt(50), student: data[getRandomInt(25)].name},
+      {type: "Slow down", time: getRandomInt(50), student: data[getRandomInt(25)].name},
+      {type: "Speed up", time: getRandomInt(50), student: data[getRandomInt(25)].name},
+      {type: "I am lost", time: getRandomInt(50), student: data[getRandomInt(25)].name},
+      {type: "I understand", time: getRandomInt(50), student: data[getRandomInt(25)].name},
+      {type: "Slow down", time: getRandomInt(50), student: data[getRandomInt(25)].name},
+      {type: "Speed up", time: getRandomInt(50), student: data[getRandomInt(25)].name},
+      {type: "I am lost", time: getRandomInt(50), student: data[getRandomInt(25)].name},
+      {type: "I understand", time: getRandomInt(50), student: data[getRandomInt(25)].name},
+      {type: "Slow down", time: getRandomInt(50), student: data[getRandomInt(25)].name},
+      {type: "Speed up", time: getRandomInt(50), student: data[getRandomInt(25)].name},
+      {type: "I am lost", time: getRandomInt(50), student: data[getRandomInt(25)].name},
+      {type: "I understand", time: getRandomInt(50), student: data[getRandomInt(25)].name},
+      {type: "Slow down", time: getRandomInt(50), student: data[getRandomInt(25)].name},
+      {type: "Speed up", time: getRandomInt(50), student: data[getRandomInt(25)].name},
+      {type: "I am lost", time: getRandomInt(50), student: data[getRandomInt(25)].name},
+      {type: "I understand", time: getRandomInt(50), student: data[getRandomInt(25)].name},
+      {type: "Slow down", time: getRandomInt(50), student: data[getRandomInt(25)].name},
+      {type: "Speed up", time: getRandomInt(50), student: data[getRandomInt(25)].name},
+      {type: "I am lost", time: getRandomInt(50), student: data[getRandomInt(25)].name},
+      {type: "I understand", time: getRandomInt(50), student: data[getRandomInt(25)].name},
+      {type: "Slow down", time: getRandomInt(50), student: data[getRandomInt(25)].name},
+      {type: "Speed up", time: getRandomInt(50), student: data[getRandomInt(25)].name},
+      {type: "I am lost", time: getRandomInt(50), student: data[getRandomInt(25)].name},
+      {type: "I understand", time: getRandomInt(50), student: data[getRandomInt(25)].name},
+      {type: "Slow down", time: getRandomInt(50), student: data[getRandomInt(25)].name},
+      {type: "Speed up", time: getRandomInt(50), student: data[getRandomInt(25)].name},
+      {type: "I am lost", time: getRandomInt(50), student: data[getRandomInt(25)].name},
+      {type: "I understand", time: getRandomInt(50), student: data[getRandomInt(25)].name},
+      {type: "Slow down", time: getRandomInt(50), student: data[getRandomInt(25)].name},
+      {type: "Speed up", time: getRandomInt(50), student: data[getRandomInt(25)].name},
+      {type: "I am lost", time: getRandomInt(50), student: data[getRandomInt(25)].name},
+      {type: "I understand", time: getRandomInt(50), student: data[getRandomInt(25)].name},
+      {type: "Slow down", time: getRandomInt(50), student: data[getRandomInt(25)].name},
+      {type: "Speed up", time: getRandomInt(50), student: data[getRandomInt(25)].name},
+      {type: "I am lost", time: getRandomInt(50), student: data[getRandomInt(25)].name},
+      {type: "I understand", time: getRandomInt(50), student: data[getRandomInt(25)].name},
+      {type: "Slow down", time: getRandomInt(50), student: data[getRandomInt(25)].name},
+      {type: "Speed up", time: getRandomInt(50), student: data[getRandomInt(25)].name},
+      {type: "I am lost", time: getRandomInt(50), student: data[getRandomInt(25)].name},
+      {type: "I understand", time: getRandomInt(50), student: data[getRandomInt(25)].name},
+      {type: "Slow down", time: getRandomInt(50), student: data[getRandomInt(25)].name},
+      {type: "Speed up", time: getRandomInt(50), student: data[getRandomInt(25)].name},
+      {type: "I am lost", time: getRandomInt(50), student: data[getRandomInt(25)].name},
+      {type: "I understand", time: getRandomInt(50), student: data[getRandomInt(25)].name},
+      {type: "Slow down", time: getRandomInt(50), student: data[getRandomInt(25)].name},
+      {type: "Speed up", time: getRandomInt(50), student: data[getRandomInt(25)].name},
+      {type: "I am lost", time: getRandomInt(50), student: data[getRandomInt(25)].name},
+      {type: "I understand", time: getRandomInt(50), student: data[getRandomInt(25)].name},
+      {type: "Slow down", time: getRandomInt(50), student: data[getRandomInt(25)].name},
+      {type: "Speed up", time: getRandomInt(50), student: data[getRandomInt(25)].name},
+      {type: "I am lost", time: getRandomInt(50), student: data[getRandomInt(25)].name},
+      {type: "I understand", time: getRandomInt(50), student: data[getRandomInt(25)].name},
+      {type: "Slow down", time: getRandomInt(50), student: data[getRandomInt(25)].name},
+      {type: "Speed up", time: getRandomInt(50), student: data[getRandomInt(25)].name},
+      {type: "I am lost", time: getRandomInt(50), student: data[getRandomInt(25)].name},
+      {type: "I understand", time: getRandomInt(50), student: data[getRandomInt(25)].name},
+      {type: "Slow down", time: getRandomInt(50), student: data[getRandomInt(25)].name},
+      {type: "Speed up", time: getRandomInt(50), student: data[getRandomInt(25)].name},
+      {type: "I am lost", time: getRandomInt(50), student: data[getRandomInt(25)].name},
+      {type: "I understand", time: getRandomInt(50), student: data[getRandomInt(25)].name},
+      {type: "Slow down", time: getRandomInt(50), student: data[getRandomInt(25)].name},
+      {type: "Speed up", time: getRandomInt(50), student: data[getRandomInt(25)].name},
+      {type: "I am lost", time: getRandomInt(50), student: data[getRandomInt(25)].name},
+      {type: "I understand", time: getRandomInt(50), student: data[getRandomInt(25)].name},
+      {type: "Slow down", time: getRandomInt(50), student: data[getRandomInt(25)].name},
+      {type: "Speed up", time: getRandomInt(50), student: data[getRandomInt(25)].name},
+      {type: "I am lost", time: getRandomInt(50), student: data[getRandomInt(25)].name},
+      {type: "I understand", time: getRandomInt(50), student: data[getRandomInt(25)].name},
+      {type: "Slow down", time: getRandomInt(50), student: data[getRandomInt(25)].name},
+      {type: "Speed up", time: getRandomInt(50), student: data[getRandomInt(25)].name},
+      {type: "I am lost", time: getRandomInt(50), student: data[getRandomInt(25)].name},
+      {type: "I understand", time: getRandomInt(50), student: data[getRandomInt(25)].name},
+      {type: "Slow down", time: getRandomInt(50), student: data[getRandomInt(25)].name},
+      {type: "Speed up", time: getRandomInt(50), student: data[getRandomInt(25)].name},
+      {type: "I am lost", time: getRandomInt(50), student: data[getRandomInt(25)].name},
+      {type: "I understand", time: getRandomInt(50), student: data[getRandomInt(25)].name},
+      {type: "Slow down", time: getRandomInt(50), student: data[getRandomInt(25)].name},
+      {type: "Speed up", time: getRandomInt(50), student: data[getRandomInt(25)].name},
+      {type: "I am lost", time: getRandomInt(50), student: data[getRandomInt(25)].name},
+      {type: "I understand", time: getRandomInt(50), student: data[getRandomInt(25)].name},
+      {type: "Slow down", time: getRandomInt(50), student: data[getRandomInt(25)].name},
+      {type: "Speed up", time: getRandomInt(50), student: data[getRandomInt(25)].name},
+      {type: "I am lost", time: getRandomInt(50), student: data[getRandomInt(25)].name},
+      {type: "I understand", time: getRandomInt(50), student: data[getRandomInt(25)].name},
+      {type: "Slow down", time: getRandomInt(50), student: data[getRandomInt(25)].name},
+      {type: "Speed up", time: getRandomInt(50), student: data[getRandomInt(25)].name},
+      {type: "I am lost", time: getRandomInt(50), student: data[getRandomInt(25)].name},
+      {type: "I understand", time: getRandomInt(50), student: data[getRandomInt(25)].name},
+      {type: "Slow down", time: getRandomInt(50), student: data[getRandomInt(25)].name},
+      {type: "Speed up", time: getRandomInt(50), student: data[getRandomInt(25)].name},
+      {type: "I am lost", time: getRandomInt(50), student: data[getRandomInt(25)].name},
+      {type: "I understand", time: getRandomInt(50), student: data[getRandomInt(25)].name},
+      {type: "Slow down", time: getRandomInt(50), student: data[getRandomInt(25)].name},
+      {type: "Speed up", time: getRandomInt(50), student: data[getRandomInt(25)].name},
+      {type: "I am lost", time: getRandomInt(50), student: data[getRandomInt(25)].name},
+      {type: "I understand", time: getRandomInt(50), student: data[getRandomInt(25)].name},
+      {type: "Slow down", time: getRandomInt(50), student: data[getRandomInt(25)].name},
+      {type: "Speed up", time: getRandomInt(50), student: data[getRandomInt(25)].name},
+      {type: "I am lost", time: getRandomInt(50), student: data[getRandomInt(25)].name},
+      {type: "I understand", time: getRandomInt(50), student: data[getRandomInt(25)].name},
+      {type: "Slow down", time: getRandomInt(50), student: data[getRandomInt(25)].name},
+      {type: "Speed up", time: getRandomInt(50), student: data[getRandomInt(25)].name},
+      {type: "I am lost", time: getRandomInt(50), student: data[getRandomInt(25)].name},
+      {type: "I understand", time: getRandomInt(50), student: data[getRandomInt(25)].name},
+      {type: "Slow down", time: getRandomInt(50), student: data[getRandomInt(25)].name},
+      {type: "Speed up", time: getRandomInt(50), student: data[getRandomInt(25)].name},
+      {type: "I am lost", time: getRandomInt(50), student: data[getRandomInt(25)].name},
+      {type: "I understand", time: getRandomInt(50), student: data[getRandomInt(25)].name},
+      {type: "Slow down", time: getRandomInt(50), student: data[getRandomInt(25)].name},
+      {type: "Speed up", time: getRandomInt(50), student: data[getRandomInt(25)].name},
+      {type: "I am lost", time: getRandomInt(50), student: data[getRandomInt(25)].name},
+      {type: "I understand", time: getRandomInt(50), student: data[getRandomInt(25)].name},
+      {type: "Slow down", time: getRandomInt(50), student: data[getRandomInt(25)].name},
+      {type: "Speed up", time: getRandomInt(50), student: data[getRandomInt(25)].name},
+      {type: "I am lost", time: getRandomInt(50), student: data[getRandomInt(25)].name},
+      {type: "I understand", time: getRandomInt(50), student: data[getRandomInt(25)].name},
+      {type: "Slow down", time: getRandomInt(50), student: data[getRandomInt(25)].name},
+      {type: "Speed up", time: getRandomInt(50), student: data[getRandomInt(25)].name},
+      {type: "I am lost", time: getRandomInt(50), student: data[getRandomInt(25)].name},
+      {type: "I understand", time: getRandomInt(50), student: data[getRandomInt(25)].name},
+      {type: "Slow down", time: getRandomInt(50), student: data[getRandomInt(25)].name},
+      {type: "Speed up", time: getRandomInt(50), student: data[getRandomInt(25)].name},
+      {type: "I am lost", time: getRandomInt(50), student: data[getRandomInt(25)].name},
+      {type: "I understand", time: getRandomInt(50), student: data[getRandomInt(25)].name},
+      {type: "Slow down", time: getRandomInt(50), student: data[getRandomInt(25)].name},
+      {type: "Speed up", time: getRandomInt(50), student: data[getRandomInt(25)].name},
+      {type: "I am lost", time: getRandomInt(50), student: data[getRandomInt(25)].name},
+      {type: "I understand", time: getRandomInt(50), student: data[getRandomInt(25)].name},
+      {type: "Slow down", time: getRandomInt(50), student: data[getRandomInt(25)].name},
+      {type: "Speed up", time: getRandomInt(50), student: data[getRandomInt(25)].name},
+      {type: "I am lost", time: getRandomInt(50), student: data[getRandomInt(25)].name},
+      {type: "I understand", time: getRandomInt(50), student: data[getRandomInt(25)].name},
+      {type: "Slow down", time: getRandomInt(50), student: data[getRandomInt(25)].name},
+      {type: "Speed up", time: getRandomInt(50), student: data[getRandomInt(25)].name},
+      {type: "I am lost", time: getRandomInt(50), student: data[getRandomInt(25)].name},
+      {type: "I understand", time: getRandomInt(50), student: data[getRandomInt(25)].name},
+      {type: "Slow down", time: getRandomInt(50), student: data[getRandomInt(25)].name},
+      {type: "Speed up", time: getRandomInt(50), student: data[getRandomInt(25)].name},
+      {type: "I am lost", time: getRandomInt(50), student: data[getRandomInt(25)].name},
+      {type: "I understand", time: getRandomInt(50), student: data[getRandomInt(25)].name},
+      {type: "Slow down", time: getRandomInt(50), student: data[getRandomInt(25)].name},
+      {type: "Speed up", time: getRandomInt(50), student: data[getRandomInt(25)].name},
+      {type: "I am lost", time: getRandomInt(50), student: data[getRandomInt(25)].name},
+      {type: "I understand", time: getRandomInt(50), student: data[getRandomInt(25)].name},
+      {type: "Slow down", time: getRandomInt(50), student: data[getRandomInt(25)].name},
+      {type: "Speed up", time: getRandomInt(50), student: data[getRandomInt(25)].name},
+      {type: "I am lost", time: getRandomInt(50), student: data[getRandomInt(25)].name},
+      {type: "I understand", time: getRandomInt(50), student: data[getRandomInt(25)].name},
+      {type: "Slow down", time: getRandomInt(50), student: data[getRandomInt(25)].name},
+      {type: "Speed up", time: getRandomInt(50), student: data[getRandomInt(25)].name},
+      {type: "I am lost", time: getRandomInt(50), student: data[getRandomInt(25)].name},
+      {type: "I understand", time: getRandomInt(50), student: data[getRandomInt(25)].name},
+      {type: "Slow down", time: getRandomInt(50), student: data[getRandomInt(25)].name},
+      {type: "Speed up", time: getRandomInt(50), student: data[getRandomInt(25)].name},
+    ]
+    setDatas(newDatas)
+  }, [])
+
+
 
   const dataResults = (item) => {
     const allResults = {
@@ -307,6 +559,30 @@ function ReviewDataPage(props) {
     }
   ]
 
+  const alertColumns = [
+    {title: "Name", dataIndex: "name", key:'name', align:'left', width: '150px',
+      sorter: (a, b) => a.name.localeCompare(b.name),
+    },
+    {title: "Class", dataIndex: "class", key:'class', align:'left', width: '80px',
+      sorter: (a, b) => a.class.localeCompare(b.class),
+    },
+    {title: "I am lost", dataIndex: "iAmLost", key:'iAmLost', align:'left', width: '80px',
+      sorter: (a, b) => a.iAmLost.localeCompare(b.iAmLost),
+    },
+    {title: "Slow Down", dataIndex: "slowDown", key:'slowDown', align:'left', width: '80px',
+      sorter: (a, b) => a.slowDown.localeCompare(b.slowDown),
+    },
+    {title: 'Actions', dataIndex: "actions", key:'actions', width:'100px', align:'left', width: '100px',
+      render: (text, record) => {
+        return (
+          <Button type="primary" onClick={()=>(setVisible(true))}>
+            View Details
+          </Button>
+        )
+      }
+    }
+  ]
+
   const lessonColumns = [
     {title: "Date", dataIndex: "date", key:'date', align:'left', width: '80px',
     sorter: (a, b) => a.date.localeCompare(b.date),
@@ -323,7 +599,7 @@ function ReviewDataPage(props) {
     {title: 'Actions', dataIndex: "actions", key:'actions', width:'100px', align:'left',
     render: (text, record) => {
         return (
-          <Button type="primary" onClick={()=>(setVisible(true))}>
+          <Button type="primary" onClick={()=>(setClassVisible(true))}>
             View Details
           </Button>
         )
@@ -374,17 +650,11 @@ function ReviewDataPage(props) {
 
   const onChange = (value) => {
       if(value[0]!=value[1]){
+        if(dataQuestions.slice(value[0], value[1])){
           setDataClass(dataQuestions.slice(value[0], value[1]))
+        }
       }
   }
-
-  const formatter = (value) => {
-      return dates[value]
-  }
-
-  const dates = []
-
-
 
   return (
     <div className="ReviewDataPage" style={{
@@ -477,7 +747,7 @@ function ReviewDataPage(props) {
               </Title>
               <Tabs defaultActiveKey="1">
                 { 
-                  subjectList.map((item)=>{return(
+                  subjectObject.map((item)=>{return(
                     <TabPane tab={item.subj} key={item.key}>
                       <ChartResults subject={item.subj}/>
                     </TabPane>
@@ -509,23 +779,22 @@ function ReviewDataPage(props) {
           </Row>
           <Row>
             <Title level={3}>
-              Class Data
+              Overall Summary
             </Title>
           </Row>
           <Row>
             <Tabs defaultActiveKey="1">
               { 
-                subjectList.map((item)=>{return(
+                subjectObject.map((item)=>{return(
                   <TabPane tab={item.subj} key={item.key}>
                     <ChartClass subject={item.subj}/>
                     <Slider 
                       range
                       onChange={(w)=>(onChange(w))}
-                      defaultValue={[0, 20]}
+                      defaultValue={[0, 23]}
                       style={{width: '97vw'}}
-                      max={20}
+                      max={23}
                       min={0}
-                      tipFormatter={formatter}
                       included={true}
                       marks={marksObject}
                       style={{margin: '5px 40px 30px 40px'}}
@@ -534,6 +803,90 @@ function ReviewDataPage(props) {
                 )})
               }
             </Tabs>
+          </Row>
+        </div>
+      </Modal>
+      <Modal
+        visible={classVisible}
+        onCancel={()=>{setClassVisible(false)}}
+        footer={false}
+        width={'90vw'}
+      >
+        <div class='hide-scroll' style={{overflowY: 'scroll', height: '80vh', width: '90vw'}}>
+          <Row>
+            <Col span={12}>
+              <Title level={3}>
+                Class Data
+              </Title>
+              <Chart height={400} data={dataLessonClass} scale={cols} autoFit>
+                <Coordinate type="theta" radius={0.75} />
+                <Tooltip showTitle={false} />
+                <Axis visible={false} />
+                <Interval
+                  position="percent"
+                  adjust="stack"
+                  color="item"
+                  style={{
+                    lineWidth: 1,
+                    stroke: '#fff',
+                  }}
+                  label={['count', {
+                    content: (data) => {
+                      return `${data.item}: ${data.percent * 100}%`;
+                    },
+                  }]}
+                  state={{
+                    selected: {
+                      style: (t) => {
+                        const res = getTheme().geometries.interval.rect.selected.style(t);
+                        return { ...res, fill: 'red' }
+                      }
+                    }
+                  }}
+                />
+              </Chart>
+            </Col>
+            <Col span={12}>
+              <Title level={3}>
+                Student Alert
+              </Title>
+              <Row>
+                <Table
+                  columns={alertColumns}
+                  dataSource={alertDataSource}
+                  scroll={{ y: '59vh' }}
+                  style={{
+                    width: '800px'
+                  }}
+                />
+              </Row>
+            </Col>
+          </Row>
+          <Row>
+            <Title level={3}>
+              Class Data with time
+            </Title>
+            <Chart
+              height={700}
+              width={'85vw'}
+              data={datas}
+              autoFit
+              interactions={['legend-highlight', 'brush']}
+              onGetG2Instance={(c => {
+                chartIns = c;
+                c.on('beforepaint', () => {
+                  console.log(c.filteredData)
+                })
+              })}
+            >
+              <Point
+                position="time*student"
+                color="type"
+                shape="circle"
+                style={{
+                  fillOpacity: 0.85
+                }} />
+            </Chart>
           </Row>
         </div>
       </Modal>
