@@ -29,6 +29,7 @@ router.register(r'chat', views.ChatView)
 router.register(r'app', views.AppView)
 router.register(r'class', views.ClassView)
 router.register(r'class/fetchlesson', views.LessonView)
+router.register(r'class/fetchclass', views.ClassLessonView)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
