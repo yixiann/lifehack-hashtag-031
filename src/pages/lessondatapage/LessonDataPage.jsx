@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom';
 import { Button, Table, Form, Input, Typography } from 'antd';
 import axios from 'axios';
@@ -83,8 +83,8 @@ export const LessonDataPage = (props) => {
         return record.dateStart > moment()
         ? "Upcoming"
         : record.dateStart < moment() && record.dateEnd > moment()
-          ? <Link to={`lessondata/livedata?classId=${record.classId}`}>View Live</Link>
-          : <Link to={`lessondata/reviewdata?classId=${record.classId}`}>Review Data</Link> 
+          ? <Link to={`lessondata/livedata?classid=${record.classId}`}>View Live</Link>
+          : <Link to={`lessondata/reviewdata?classid=${record.classId}`}>Review Data</Link> 
       }
     }
   ]
