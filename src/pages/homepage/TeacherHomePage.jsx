@@ -1,6 +1,5 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { Button, Table, Form, Input, Typography } from 'antd';
-import axios from 'axios';
 import URI, { convertToFormData } from '../../constants/URL'
 import API from '../../API'
 import { confirmationModal, errorModal, successModal } from '../../components/UI/submissionModal';
@@ -15,11 +14,6 @@ export const HomePage = ({
   }
 
   var auth = useAuth();
-
-  var { token, user } = auth
-
-  // console.log("TOKEN",token)
-  // console.log("USER", user)
 
   const { Title } = Typography
 
@@ -44,8 +38,8 @@ export const HomePage = ({
   }
 
   const submitTest = (data) => {
-    API.post(URI.test, convertToFormData(data), {
-    }).then(()=>{
+    API.post(URI.test, convertToFormData(data))
+    .then(()=>{
       successModal("Successfully submitted")
       fetchAllTest()
     })
