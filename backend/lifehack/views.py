@@ -28,6 +28,11 @@ class LessonView(viewsets.ReadOnlyModelViewSet):
     queryset = Class.objects.all()
     lookup_field = "createdby"
 
+class ClassLessonView(viewsets.ReadOnlyModelViewSet):
+    serializer_class = ClassSerializer
+    queryset = Class.objects.all()
+    lookup_field = "classid"
+
 class AppView(viewsets.ModelViewSet):
     serializer_class = AppSerializer
     queryset = App.objects.all()

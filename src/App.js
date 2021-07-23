@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Switch, Route, Redirect } from "react-router-d
 import './App.css';
 import 'antd/dist/antd.css';
 import 'bootstrap/dist/css/bootstrap.css';
+import './css/common.css';
 import LoginPage from "./pages/loginpage/LoginPage";
 import CreateUserPage from "./pages/loginpage/CreateUserPage";
 import MainLayout from "./layout/MainLayout";
@@ -17,7 +18,7 @@ export default function app() {
       <Router>
         <Switch>
           <Route exact path="/">
-            <Redirect to="/home" />
+            <Redirect to={`/${window.localStorage.getItem('role')}/dashboard`} />
           </Route>
           <Route exact path="/login">
             <LoginPage authContext={authContext}/>

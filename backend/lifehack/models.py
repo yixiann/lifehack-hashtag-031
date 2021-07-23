@@ -28,7 +28,7 @@ class Chat(models.Model):
         return f'From: {self.fromAddress} To: {self.toAddress} Text: {self.text} Date: {str(self.date)} Comments: {self.comments} Attachments: {self.attachments}'
 
 class Class (models.Model):
-    classid = models.IntegerField(blank=True)
+    classid = models.CharField(max_length=100, blank=True)
     zoomlink = models.CharField(max_length=10000, blank=True)
     teacher = models.CharField(max_length=120, blank=True)
     subject = models.CharField(max_length=120, blank=True)
