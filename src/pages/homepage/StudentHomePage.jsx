@@ -21,6 +21,7 @@ export const HomePage = ({
   })
 
   const [fileData, setFileData] = useState('')
+  const [oriFileData, setOriFileData] = useState()
 
   const [previewVisible, setPreviewVisible] = useState(false)
   const [previewImage, setPreviewImage] = useState('')
@@ -158,20 +159,20 @@ export const HomePage = ({
   }
 
   const sendApp = (data) => {
-    // API.post(URI.app, convertToFormData(data))
-    // .then(()=>{
-    //   successModal("Sent")
-    // })
-    // .catch((err) => {
-    //   errorModal(err)
-    //   console.log("ERROR", err)
-    // });
+    API.post(URI.app, convertToFormData(data))
+    .then(()=>{
+      successModal("Sent")
+    })
+    .catch((err) => {
+      errorModal(err)
+      console.log("ERROR", err)
+    });
   }
 
-  const buttonPress = (type) => {
+  const buttonPress = (type, datas) => {
     var user = window.localStorage.getItem('username')
     var data = {
-      classId: '',
+      classid: 1,
       yes: '',
       no: '',
       toofast: '',
@@ -184,45 +185,40 @@ export const HomePage = ({
     var result = {}
     switch(type){
       case 'yes':
-       successModal('Message Sent!')
         result = {
           ...data,
           yes: user
         }
         return sendApp(result)
       case 'no':
-      successModal('Message Sent!')
         result = {
           ...data,
           no: user
         }
         return sendApp(result)
       case 'toofast':
-        successModal('Message Sent!')
         result = {
           ...data,
           toofast: user
         }
         return sendApp(result)
       case 'tooslow':
-        successModal('Message Sent!')
         result = {
           ...data,
           tooslow: user
         }
         return sendApp(result)
       case 'comment':
-        successModal('Message Sent!')
+        console.log(datas)
         result = {
           ...data,
-          comment: user
+          comments: datas
         }
         return sendApp(result)
       case 'attachment':
-        successModal('Message Sent!')
         result = {
           ...data,
-          comment: user
+          attachments: oriFileData
         }
         return sendApp(result)
       default:
@@ -231,7 +227,10 @@ export const HomePage = ({
   }
   
   return (
-    <div>
+    <div style={{
+      minWidth:'1500px',
+      overflowX: 'scroll'
+    }}>
       { !inClass &&
         <div
           className="fill-content"
@@ -287,10 +286,10 @@ export const HomePage = ({
                     style={{fontSize: '60px'}}
                   />
                   <Title level={4}>
-                    Yes / 对
+                    I understand
                   </Title>
                   <Title level={4}>
-                    iya /ஆம்
+                    {/* iya /ஆம் */}
                   </Title>
                 </Button></Col>
                 <Col span={12}><Button onClick={()=>(buttonPress('no'))} shape="round" style={style('#ff7875')}>
@@ -298,10 +297,10 @@ export const HomePage = ({
                     style={{fontSize: '60px'}}
                   />
                   <Title level={4}>
-                    No / 错
+                    I am lost
                   </Title>
                   <Title level={4}>
-                    tidak / இல்லை
+                    {/* tidak / இல்லை */}
                   </Title>
                 </Button></Col>
               </Row>
@@ -312,10 +311,10 @@ export const HomePage = ({
                     style={{fontSize: '60px'}}
                   />
                   <Title level={4}>
-                    Too Fast / 太快了
+                    Slow Down
                   </Title>
                   <Title level={4}>
-                    terlalu laju / மிக வேகமாக
+                    {/* terlalu laju / மிக வேகமாக */}
                   </Title>
                 </Button></Col>
                 <Col span={12}><Button onClick={()=>(buttonPress('tooslow'))} shape="round" style={style('#69c0ff')}>
@@ -323,10 +322,10 @@ export const HomePage = ({
                     style={{fontSize: '60px'}}
                   />
                   <Title level={4}>
-                    Too Slow / 太慢了
+                    Speed Up
                   </Title>
                   <Title level={4}>
-                    terlalu perlahan / மிக மெதுவாக
+                    {/* terlalu perlahan / மிக மெதுவாக */}
                   </Title>
                 </Button></Col>
               </Row>
@@ -334,7 +333,7 @@ export const HomePage = ({
             <Col span={1}/>
             <Col span={7}>
               <Row>
-              <div class='hide-scroll' style={{overflowY: 'scroll', height: '74vh', border: '2px black solid', borderBottom: '0px', width: '30vw'}}>
+              <div class='hide-scroll' style={{overflowY: 'scroll', height: '74vh', border: '2px black solid', borderBottom: '0px', width: '30vw', minWidth: '426px'}}>
                 <Row 
                   style={{
                     backgroundImage: 'url(https://theabbie.github.io/blog/assets/official-whatsapp-background-image.jpg)',
@@ -396,7 +395,7 @@ export const HomePage = ({
               <Form
                 form={form}
                 name="chat"
-                onFinish={e => sendMessage(e)}
+                onFinish={e => {buttonPress('comment',e.message)}}
                 style={{
                   border: '2px black solid',
                   borderTop: '0px'
@@ -430,10 +429,11 @@ export const HomePage = ({
                     listType="picture"
                     accept=".jpg, .png"
                     showUploadList={false}
-                    beforeUpload={async (file) => {
-                        storeBase64(file)
-                        return false;
-                    }}
+                    // beforeUpload={async (file) => {
+                    //     setOriFileData(file)
+                    //     storeBase64(file)
+                    //     return false;
+                    // }}
                   >
                     <Col span={2} align='middle'>
                       <Button><UploadOutlined/></Button>

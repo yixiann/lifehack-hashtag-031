@@ -1,9 +1,10 @@
 import React, { useContext, useState, useEffect } from 'react';
 import { useHistory, useLocation } from "react-router-dom";
-import { Form, Input, Menu, Select, Dropdown } from 'antd';
+import { Form, Input, Select } from 'antd';
 import axios from 'axios';
 import URI, { convertToFormData } from '../../constants/URL';
-import {  DownOutlined, UserOutlined,  EyeInvisibleOutlined, EyeTwoTone } from '@ant-design/icons';
+import { EyeInvisibleOutlined, EyeTwoTone } from '@ant-design/icons';
+import { errorModal } from '../../components/UI/submissionModal'
 
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
@@ -85,6 +86,7 @@ const LoginPage = ({
       .then((res)=>{
         return res.data.token
       }).catch((err) => {
+        errorModal("Incorrect username or password")
         console.log("ERROR", err)
       });
     return tokenData
@@ -164,7 +166,6 @@ const LoginPage = ({
                 name="login"
                 className={classes.form}
               >
-              {/* <form className={classes.form} noValidate> */}
                 <Form.Item
                   name="username"
                   rules={[{required: true, message: 'Please input your Username!' }]}
@@ -186,6 +187,7 @@ const LoginPage = ({
                 </Form.Item>
                 <Form.Item
                   name="role"
+                  rules={[{required: true, message: 'Please select a Role!' }]}
                 >
                   <Select
                     onSelect={(e)=>(window.localStorage.setItem('role',e))}
@@ -201,7 +203,7 @@ const LoginPage = ({
                   variant="contained"
                   color="primary"
                   className={classes.submit}
-                  onClick={login}
+                  onClick={()=>(form.validateFields().then(()=>(login())))}
                 >
                   Sign In
                 </Button>

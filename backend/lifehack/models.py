@@ -4,10 +4,10 @@ from django.db.models.deletion import CASCADE
 # Create your models here.
 
 class User(AbstractUser):  
-    type = models.CharField(max_length=100, default="Student")
+    role = models.CharField(max_length=100, default="Student")
 
     def __str__ (self):
-        return f'{self.username} is a {self.type}'
+        return f'{self.username} is a {self.role}'
 
 class Test(models.Model):
     text = models.CharField(max_length=120)
