@@ -184,3 +184,16 @@
   width: 100%;
   height: 100%;
 }
+.liveChat {
+  display: flex;
+  justify-content: center;
+  overflow-y: scroll;
+  height: 400px;
+}
+.liveChatCard {
+  width: 500px;
+}
+.liveChatSubheaders {
+  display: flex;
+  justify-content: center;
+}
