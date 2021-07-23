@@ -67,7 +67,7 @@ function LiveDataPage(props) {
               tooltipPlacement="bottom"
               tipFormatter={value => {
                 if(value < 0) {
-                  return `${value} students voted to slow down!`
+                  return `${-1*value} students voted to slow down!`
                 } else if (value > 0) {
                   return `${value} students voted for speed up!`
                 } else {
@@ -108,7 +108,7 @@ function LiveDataPage(props) {
                     className="liveChatCard"
                     type="inner"
                     bordered={false}
-                    title={`${obj.fromUsername} ${obj.timestamp.fromNow()}`}
+                    title={`${obj.fromUsername} asked ${obj.timestamp.fromNow()}`}
                     bodyStyle={{fontSize: '20px'}}
                   >
                     {obj.message}
