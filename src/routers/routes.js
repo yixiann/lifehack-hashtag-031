@@ -28,7 +28,17 @@ const PrivateRoutes = [
     path: '/lessondata',
     exact: true,
     component: React.lazy(() => import("../pages/lessondatapage/LessonDataPage")),
-  }
+  },
+  {
+    path: '/lessondata/livedata',
+    exact: true,
+    component: React.lazy(() => import("../pages/lessondatapage/LiveDataPage")),
+  },
+  {
+    path: '/lessondata/reviewdata',
+    exact: true,
+    component: React.lazy(() => import("../pages/lessondatapage/ReviewDataPage")),
+  },
 ];
 
 export { PublicRoutes, PrivateRoutes };

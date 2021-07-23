@@ -1,4 +1,5 @@
-import React, { useEffect, useState, useContext } from 'react';
+import React, { useEffect, useState, useContext } from 'react'
+import { Link } from 'react-router-dom';
 import { Button, Table, Form, Input, Typography } from 'antd';
 import axios from 'axios';
 import URI, { convertToFormData } from '../../constants/URL'
@@ -11,6 +12,7 @@ export const LessonDataPage = (props) => {
   const { Title } = Typography
   const dataSource = [
     {
+      classId: 1,
       className: "1A",
       subject: "History",
       dateStart: moment("202107230900", "YYYYMMDDHHmm"),
@@ -18,6 +20,7 @@ export const LessonDataPage = (props) => {
       remarks: "New topic WWII with group discussion",
     },
     {
+      classId: 2,
       className: "4J",
       subject: "A-Math",
       dateStart: moment("202107241000", "YYYYMMDDHHmm"),
@@ -25,6 +28,7 @@ export const LessonDataPage = (props) => {
       remarks: "Vectors using geoGebra",
     },
     {
+      classId: 3,
       className: "5N",
       subject: "A-Math",
       dateStart: moment("202107241800", "YYYYMMDDHHmm"),
@@ -32,6 +36,7 @@ export const LessonDataPage = (props) => {
       remarks: "Vectors with physical props",
     },
     {
+      classId: 4,
       className: "1C",
       subject: "History",
       dateStart: moment("202107251345", "YYYYMMDDHHmm"),
@@ -39,6 +44,7 @@ export const LessonDataPage = (props) => {
       remarks: "New topic WWII with movie trailler",
     },
     {
+      classId: 5,
       className: "1A",
       subject: "English",
       dateStart: moment("202107250800", "YYYYMMDDHHmm"),
@@ -77,8 +83,8 @@ export const LessonDataPage = (props) => {
         return record.dateStart > moment()
         ? "Upcoming"
         : record.dateStart < moment() && record.dateEnd > moment()
-          ? <a>View Live</a>
-          : <a>Review Data</a> 
+          ? <Link to={`lessondata/livedata?classId=${record.classId}`}>View Live</Link>
+          : <Link to={`lessondata/reviewdata?classId=${record.classId}`}>Review Data</Link> 
       }
     }
   ]
