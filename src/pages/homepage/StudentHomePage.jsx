@@ -229,8 +229,6 @@ export const HomePage = ({
         return null
     }
   }
-
-  console.log("CHAT HIS", chatHistory)
   
   return (
     <div>
