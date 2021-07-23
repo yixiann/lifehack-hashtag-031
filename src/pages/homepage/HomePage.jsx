@@ -4,6 +4,7 @@ import axios from 'axios';
 import URI, { convertToFormData } from '../../constants/URL'
 import API from '../../API'
 import { confirmationModal, errorModal, successModal } from '../../components/UI/submissionModal';
+
 export const HomePage = ({
   authContext,
   ...props
