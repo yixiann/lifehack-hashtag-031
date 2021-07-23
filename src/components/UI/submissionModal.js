@@ -9,7 +9,7 @@ export const successModal = (message) => {
     title: "Success",
     text: message,
     icon: "success",
-    className: "success-swal"
+    className: "success-swal",
   });
 }
 
@@ -39,7 +39,6 @@ export const errorModal = (message) => {
 }
 
 export const confirmationModal = ({
- 
     title,
     text,
     loading = true,
@@ -49,7 +48,6 @@ export const confirmationModal = ({
     data,
     functionCancel = () => {return true}, // New to define a value to not fail
     dataCancel
-
   }) => {
 
   swal({
