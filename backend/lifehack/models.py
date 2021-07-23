@@ -35,9 +35,11 @@ class Class (models.Model):
     remarks = models.CharField(max_length=1000, blank=True)
     datestart = models.DateTimeField(blank=True)
     dateend = models.DateTimeField(blank=True)
+    classname = models.CharField(max_length=100, blank=True)
+    createdby = models.CharField(max_length=100, blank=True)
 
     def __str__ (self):
-        return f'Class ID: {str(self.classid)}, Zoom Link: {self.zoomlink}, Teacher: {self.teacher}, Subject: {self.subject}, Remarks: {self.remarks}, Date Start: {str(self.datestart)}, Date End: {str(self.dateend)}'
+        return f'Class ID: {str(self.classid)}, Zoom Link: {self.zoomlink}, Teacher: {self.teacher}, Subject: {self.subject}, Remarks: {self.remarks}, Date Start: {str(self.datestart)}, Date End: {str(self.dateend)}, Class Name: {self.classname}, Created By: {self.createdby}'
 
 class App (models.Model):
     classid = models.ForeignKey(Class, on_delete=models.CASCADE)
