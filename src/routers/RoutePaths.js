@@ -20,6 +20,11 @@ const RoutePaths = {
     sider: true,
     siderName: 'About',
   },
+  'lessonData' : {
+    path: '/lessondata',
+    sider: true,
+    siderName: 'Lesson Data',
+  },
 };
 
 export { RoutePaths };

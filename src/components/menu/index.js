@@ -23,6 +23,11 @@ const SiderBar = ({ ...props }) => {
           About
         </Link>
       </Menu.Item>
+      <Menu.Item key={'lessondata'}>
+        <Link to={'/lessondata'}>
+          Lesson Data Dashboard
+        </Link>
+      </Menu.Item>
     </Menu>
   );
 }
