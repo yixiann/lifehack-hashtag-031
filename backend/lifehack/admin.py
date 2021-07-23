@@ -15,7 +15,7 @@ class AppAdmin(admin.ModelAdmin):
     list_display = ('yes', 'no', 'toofast', 'tooslow', 'comments', 'fromAddress')
 
 class ClassAdmin(admin.ModelAdmin):
-    list_display = ('classid', 'zoomlink', 'teacher', 'subject', 'remarks', 'datestart', 'dateend')
+    list_display = ('classid', 'zoomlink', 'teacher', 'subject', 'remarks', 'datestart', 'dateend', 'classname', 'createdby')
 
 # Register your models here.
 admin.site.register(User, UserAdmin)
