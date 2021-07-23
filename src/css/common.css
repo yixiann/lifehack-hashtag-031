@@ -1,0 +1,137 @@
+body, html {
+  font-family: Calibri, sans-serif;
+  font-size: 16px;
+}
+
+/* Sider Bar CSS */
+
+.sider-bar :not(.sider-logo),
+.sider-bar .ant-menu {
+    background: #203864;
+    border-color: #203864;
+    color: #ffffff;
+}
+
+.sider-logo {
+  width: 180px;
+  margin: 0px 50px 0px 0px;
+}
+
+.sider-bar .ant-menu:not(.ant-menu-horizontal) .ant-menu-item-selected {
+background-color: #1C5393;
+}
+
+.ant-menu-item-selected .ant-menu-title-content{
+  background-color:#1C5393 !important;
+}
+
+.sider-bar .ant-menu:not(.ant-menu-horizontal) .ant-menu-item-selected a {
+color: #FFFFFF;
+background-color: #1C5393;
+}
+
+/* End of Sider Bar CSS */
+
+.layout-header {
+  background-color: #FFFFFF;
+}
+
+.ant-layout-header {
+  height: 50px;
+  line-height: 50px;
+  padding: 0% 5%
+}
+
+.header-buttons {
+  width: 100%;
+  min-width: 380px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+
+.layout-content {
+  margin: 0;
+  padding:3vh 3vw;
+  background-Color: white;
+  width: 100%;
+  border-left: 1px solid #f0f0f0;
+  box-shadow: 0px 0vh 0px 1vw #dedede inset;;
+  min-width: 1000px;
+}
+
+
+/* Calendar Class Modal */
+.class-details {
+  /* min-width: 50vw; */
+  min-width: 700px;
+}
+
+/* These 3 CSS alter the header of the modal */
+.class-details .ant-modal-header {
+  background: #184CA7;  
+}
+.class-details .ant-modal-title {
+  color: #FFFFFF;
+  font-size: 20px;
+  font-weight: 600;
+}
+.class-details .ant-modal-close {
+  color: #FFFFFF;
+}
+
+/* Adjusts the padding on the wallet-identity modal */
+.class-details .ant-modal-body {
+  padding: 5px;
+  border: 0px;
+}
+
+.class-details .ant-modal-footer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 0px;
+}
+
+/* container css */
+.container {
+  margin-right: auto;
+  margin-left: auto;
+  width: inherit;
+}
+
+.container-block {
+  display: block;
+  padding: 16px 0px 0px 0px;
+}
+.container__child {
+  padding: 0px 16px;
+}
+
+.container__child--flex1 {
+  flex: 1;
+}
+
+
+/* buttons */
+.custom-green-button {
+  margin: 0 8px;
+  border: none;
+  box-shadow: none;
+  font-weight: bold;
+  color: #26A69A;
+}
+
+.custom-blue-button {
+  width: 100%;
+  padding: 2px 2px;
+  min-height: 2.5em;
+  border-radius: inherit;
+  background: #184ca7;
+  border-radius: 4px;
+  font-weight: bold;
+  font-size: 13px !important;
+  text-transform: uppercase;
+  color: #FFFFFF;
+}
