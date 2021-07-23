@@ -60,6 +60,14 @@
   min-height: calc(100vh - 64px) !important
 }
 
+.fill-content-dashboard{
+  min-height: calc(100vh - 64px) !important;
+  padding: 10px;
+  display: block;
+  position: relative;
+  /* background-image: url(https://img.freepik.com/free-vector/books-seamless-pattern-vector-books-light-bulbs-seamless-texture-reading-background_81894-4192.jpg?size=626&ext=jpg); */
+}
+
 /* Hide scroll bar */
 .hide-scroll::-webkit-scrollbar {
   display: none;
