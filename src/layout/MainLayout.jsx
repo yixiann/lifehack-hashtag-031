@@ -73,6 +73,7 @@ const MainLayout = ({ children, authContext, ...props }) => {
         >
           <SiderBar/>
         </Sider>
+
         <Content className='layout-content'>
             {children}
         </Content>
