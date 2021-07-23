@@ -9,7 +9,7 @@ class TestAdmin(admin.ModelAdmin):
     list_display = ('text', 'number')
 
 class ChatAdmin(admin.ModelAdmin):
-    list_display = ('fromAddress', 'toAddress', 'text', 'date', 'attachments')
+    list_display = ('fromAddress', 'toAddress', 'text', 'date', 'comments', 'attachments')
 
 class AppAdmin(admin.ModelAdmin):
     list_display = ('yes', 'no', 'toofast', 'tooslow', 'comments', 'fromAddress')
