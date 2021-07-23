@@ -72,7 +72,7 @@ const AboutPage = ({
   }
 
   const launchClass = () => {
-    window.localStorage.setItem('classid', launchData.classId);
+    window.localStorage.setItem('class', launchData.classId);
     window.open(launchData.link, '_blank');
     history.push("/student/dashboard")
     
