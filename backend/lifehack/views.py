@@ -1,12 +1,9 @@
 from rest_framework import viewsets, permissions, status
-from django.shortcuts import render
-
-from PIL import Image
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.parsers import MultiPartParser
-from .serializers import UserSerializer, TestSerializer, ChatSerializer, UserSerializerWithToken
-from .models import User, Test, Chat
+from .serializers import UserSerializer, TestSerializer, ChatSerializer, UserSerializerWithToken, AppSerializer, CalendarSerializer
+from .models import User, Test, Chat, App, Calendar
 
 # Create your views here.
 class UserView(viewsets.ModelViewSet):
@@ -21,6 +18,14 @@ class ChatView(viewsets.ModelViewSet):
     parser_classes = [MultiPartParser]
     serializer_class = ChatSerializer
     queryset = Chat.objects.all()
+
+class AppView(viewsets.ModelViewSet):
+    serializer_class = AppSerializer
+    queryset = App.objects.all()
+
+class CalendarView(viewsets.ModelViewSet):
+    serializer_class = CalendarSerializer
+    queryset = Calendar.objects.all()
 
 class UserList(APIView):
     permission_classes = (permissions.AllowAny,)
