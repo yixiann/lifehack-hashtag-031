@@ -51,7 +51,7 @@ class UserSerializerWithToken(serializers.ModelSerializer):
 class ClassSerializer(serializers.ModelSerializer):
     class Meta:
         model = Class
-        fields = ('classid', 'zoomlink', 'teacher', 'subject', 'remarks', 'datestart', 'dateend')
+        fields = ('classid', 'zoomlink', 'teacher', 'subject', 'remarks', 'datestart', 'dateend', 'classname', 'createdby')
 
 class AppSerializer(serializers.ModelSerializer):
     class Meta:

@@ -9,12 +9,11 @@ import moment from 'moment';
 
 function ReviewDataPage(props) {
 
-  // const classId = new URLSearchParams(props.location.search).get('classId');
-  console.log(props)
+  const classId = new URLSearchParams(window.location.search).get('classId');
 
   return (
     <div className="ReviewDataPage">
-    {/* {classId} */}
+    {classId}
     ReviewDATa
     </div>
   )
