@@ -3,7 +3,7 @@ from django.contrib.auth.admin import UserAdmin
 from .models import User, Test, Chat, App, Class
 
 class UserAdmin(UserAdmin):
-    list_display = ('username', 'type')
+    list_display = ('username', 'role')
 
 class TestAdmin(admin.ModelAdmin):
     list_display = ('text', 'number')
