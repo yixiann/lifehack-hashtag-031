@@ -135,3 +135,23 @@ background-color: #1C5393;
   text-transform: uppercase;
   color: #FFFFFF;
 }
+
+/* creation modal */
+
+.creation-modal {
+  /* min-width: 50vw; */
+  min-width: 700px;
+}
+
+/* These 3 CSS alter the header of the modal */
+.creation-modal .ant-modal-header {
+  background: #184CA7;  
+}
+.creation-modal .ant-modal-title {
+  color: #FFFFFF;
+  font-size: 20px;
+  font-weight: 600;
+}
+.creation-modal .ant-modal-close {
+  color: #FFFFFF;
+}

@@ -1,9 +1,9 @@
 const URI = {
-  app: 'api/app/',
-  test: 'api/test/',
-  signIn: 'token-auth/',
-  signInRefresh: 'token-auth-refresh/',
-  createUser: 'user/'
+  app: '/api/app/',
+  test: '/api/test/',
+  signIn: '/token-auth/',
+  signInRefresh: '/token-auth-refresh/',
+  createUser: '/user/',
 }
 
 export default URI
