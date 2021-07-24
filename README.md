@@ -1,34 +1,93 @@
-# Getting Started with Aid-ucation
+# Getting Started with Create React App
 
-## Setup
+This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-### Install Node.js, Python
-https://nodejs.org/en/download/current/  
-https://www.python.org/downloads/  
+## Available Scripts
 
-### Install Django, Django REST Framework and Django CORS Headers 
-python -m pip install Django 
-pip install djangorestframework 
-python -m pip install django-cors-headers 
+In the project directory, you can run:
 
-### Install JSON Web Token 
-pip install djangorestframework-jwt 
+### `yarn start`
 
-### Install Pillow 
-pip install pillow 
+Runs the app in the development mode.\
+Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
+The page will reload if you make edits.\
+You will also see any lint errors in the console.
 
-## Running the application
-Clone the repository from GitHub 
-Execute cd lifehack in the terminal to change directory into the repository 
-Run command npm install to install all dependencies. Ensure running app as administrator or use sudo 
-Once installed run command npm start 
-In your browser go to localhost:3000 
-In the terminal, cd backend to change directory to the backend 
-Run python manage.py migrate to migrate the changes made 
-Run command python manage.py runserver to run a development server locally 
-In your browser go to localhost: http://127.0.0.1:8000/admin 
+### `yarn test`
 
-## Login Credentials
-Login: donovan
-Password: donovan
+Launches the test runner in the interactive watch mode.\
+See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+
+### `yarn build`
+
+Builds the app for production to the `build` folder.\
+It correctly bundles React in production mode and optimizes the build for the best performance.
+
+The build is minified and the filenames include the hashes.\
+Your app is ready to be deployed!
+
+See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+
+### `yarn eject`
+
+**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+
+If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+
+Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+
+You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+
+## Learn More
+
+You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+
+To learn React, check out the [React documentation](https://reactjs.org/).
+
+### Code Splitting
+
+This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+
+### Analyzing the Bundle Size
+
+This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+
+### Making a Progressive Web App
+
+This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+
+### Advanced Configuration
+
+This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+
+### Deployment
+
+This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+
+### `yarn build` fails to minify
+
+This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+
+**Detailed instructions on accessing the application** <br />
+Launching the application <br />
+1. Install Node.js, Python <br />
+ - https://nodejs.org/en/download/current/  <br />
+ - https://www.python.org/downloads/  <br />
+2. Install Django, Django REST Framework and Django CORS Headers <br />
+ - python -m pip install Django <br />
+ - pip install djangorestframework <br />
+ - python -m pip install django-cors-headers <br />
+3. Install JSON Web Token <br />
+ - pip install djangorestframework-jwt <br />
+4. Install Pillow <br />
+ - pip install pillow <br />
+5. Clone the repository from GitHub <br />
+6. Execute cd lifehack in the terminal to change directory into the repository <br />
+7. Run command npm install to install all dependencies. Ensure running app as administrator or use sudo <br />
+8. Once installed run command npm start <br />
+9. In your browser go to localhost:3000 <br />
+10. In the terminal, cd backend to change directory to the backend <br />
+11. Run python manage.py migrate to migrate the changes made <br />
+12. Run command python manage.py runserver to run a development server locally <br />
+13. In your browser go to localhost: http://127.0.0.1:8000/admin <br />
