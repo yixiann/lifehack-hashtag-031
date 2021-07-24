@@ -86,7 +86,7 @@ Clone the repository from GitHub /
 Execute cd lifehack in the terminal to change directory into the repository /
 Run command npm install to install all dependencies. Ensure running app as administrator or use sudo /
 Once installed run command npm start /
-In your browser go to localhost:3000 /
+In your browser go to localhost:3000 <br />
  In the terminal, cd backend to change directory to the backend /
  Run python manage.py migrate to migrate the changes made /
  Run command python manage.py runserver to run a development server locally /
