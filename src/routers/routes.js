@@ -25,12 +25,12 @@ const PrivateRoutes = [
     component: React.lazy(() => import("../pages/homepage/StudentHomePage")),
   },
   {
-    path: '/teacher/about',
+    path: '/teacher/schedule',
     exact: true,
     component: React.lazy(() => import("../pages/aboutpage/AboutPage")),
   },
   {
-    path: '/student/about',
+    path: '/student/schedule',
     exact: true,
     component: React.lazy(() => import("../pages/aboutpage/AboutPage")),
   },
