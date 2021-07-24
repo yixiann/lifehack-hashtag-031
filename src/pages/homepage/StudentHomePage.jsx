@@ -14,9 +14,16 @@ export const HomePage = ({
   ...props
 }) => {
 
+  const [classDetails, setclassDetails] = useState(null)
+
   useEffect(()=>{
-    if(window.localStorage.getItem('class')){
+    if(window.localStorage.getItem('class') && !classDetails){
       setInClass(true)
+      API.get(`/api/class/fetchclass/${window.localStorage.getItem('class')}`)
+      .then(resp => {
+        setclassDetails(resp.data)
+      })
+      .catch(resp => (console.log(resp)))
     }
   })
 
@@ -41,8 +48,9 @@ export const HomePage = ({
     }
   }
 
-  const fetchChat = () => {
-    API.get('/api/chat/').then((res) => {
+  const fetchApp = () => {
+    API.get('/api/app/').then((res) => {
+      console.log(res.data)
       setChatHistory(res.data)
     })
     .catch((err) => {
@@ -51,7 +59,7 @@ export const HomePage = ({
   }
 
   useEffect(() => {
-    fetchChat()
+    fetchApp()
   }, [])
 
   async function storeBase64(file){
@@ -104,7 +112,7 @@ export const HomePage = ({
     API.post('/api/chat/', convertToFormData(data)).then(() => {
       form.resetFields()
     })
-    .then(()=>{setFileData('');fetchChat()})
+    .then(()=>{setFileData('');fetchApp()})
     .catch((err) => {
       errorModal(err)
       console.log("ERROR", err)
@@ -143,7 +151,7 @@ export const HomePage = ({
     return (
       <div
         style={{
-          border: 'solid black 1px',
+          border: 'solid black 3px',
           borderRadius: '3px',
           backgroundColor: 'white',
           margin: '5px',
@@ -158,10 +166,13 @@ export const HomePage = ({
     )
   }
 
-  const sendApp = (data) => {
+  const sendApp = (data, type=true) => {
     API.post(URI.app, convertToFormData(data))
     .then(()=>{
-      successModal("Sent")
+      fetchApp()
+      if(type){
+        successModal('Successfully Sent')
+      }
     })
     .catch((err) => {
       errorModal(err)
@@ -214,13 +225,13 @@ export const HomePage = ({
           ...data,
           comments: datas
         }
-        return sendApp(result)
+        return sendApp(result, false)
       case 'attachment':
         result = {
           ...data,
           attachments: oriFileData
         }
-        return sendApp(result)
+        return sendApp(result, false)
       default:
         return null
     }
@@ -274,9 +285,24 @@ export const HomePage = ({
             padding: '20px',
           }}
         >
-          <Button type="primary" onClick={()=>{leaveClass()}}>
-            Leave Class
-          </Button>
+          <Row>
+            <Col span={4}>
+              <Button type="primary" onClick={()=>{leaveClass()}} style={{height: '80px'}}>
+                <Title style={{padding: '0px', margin: "0px"}}>
+                  Leave Class
+                </Title>
+              </Button>
+            </Col>
+            <Col span={10}>
+              <Title style={{padding: '0px', margin: '0px'}}>
+                {`${classDetails?.subject} - ${classDetails?.remarks} (${classDetails?.teacher}) `}                
+              </Title>
+              <a  style={{fontSize:'20px'}} onClick={()=>(window.open(classDetails.zoomlink, '_blank'))}>
+                Click here to be redirected to your Zoom class
+              </a>
+            </Col>
+          </Row>
+          
           <Row style={{height: '20px'}}/>
           <Row>
             <Col span={16}>
@@ -340,24 +366,23 @@ export const HomePage = ({
                     minHeight:'74vh'
                   }}
                   >
-                  {chatHistory?.filter(item => (item.toAddress === user || item.toAddress === selectedUserId)
-                      && (item.fromAddress === user || item.fromAddress === selectedUserId))
+                  {chatHistory?.filter(item => (item.fromAddress === user && item.comments !== ""))
                     ?.map(item => {
-                      if(item.text!==''){
+                      if(item.comments!==''){
                         return (
                           <>
                             { item.fromAddress===user &&
                               <>
                                 <Col span={16}/>
                                 <Col span={8}>
-                                  <TextBox text={item.text}/>
+                                  <TextBox text={item.comments}/>
                                 </Col>
                               </>
                             }
                             { item.toAddress===user &&
                               <>
                                 <Col span={8}>
-                                  <TextBox text={item.text}/>
+                                  <TextBox text={item.comments}/>
                                 </Col>
                                 <Col span={16}/>
                               </>
@@ -406,7 +431,7 @@ export const HomePage = ({
                   backgroundColor: '#002766'
                 }}>
                   <Col span={16} align='middle'>
-                    { fileData===''&&
+                    { true &&
                       <Form.Item name="message">
                         <Input
                           placeholder="Input message"
@@ -414,7 +439,7 @@ export const HomePage = ({
                       </Form.Item>
                     }
                     {
-                      fileData!==''&&
+                      false &&
                       <Row gutter={16}>
                         <Col span={12}>
                           <Button style={{width:'100%'}} onClick={()=>(handleClick(fileData))}>Preview</Button>
@@ -425,20 +450,20 @@ export const HomePage = ({
                       </Row>
                     }
                   </Col>
-                  <Upload
+                  {/* <Upload
                     listType="picture"
                     accept=".jpg, .png"
                     showUploadList={false}
-                    // beforeUpload={async (file) => {
-                    //     setOriFileData(file)
-                    //     storeBase64(file)
-                    //     return false;
-                    // }}
+                    beforeUpload={async (file) => {
+                        setOriFileData(file)
+                        storeBase64(file)
+                        return false;
+                    }}
                   >
                     <Col span={2} align='middle'>
                       <Button><UploadOutlined/></Button>
                     </Col>
-                  </Upload>
+                  </Upload> */}
                   <Form.Item>
                     <Col span={4} align='middle'>
                       <Button htmlType='submit'>Send</Button>

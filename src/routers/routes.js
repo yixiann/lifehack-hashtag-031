@@ -10,11 +10,6 @@ const PublicRoutes = [
 
 const PrivateRoutes = [
   {
-    path: '/chat',
-    exact: true,
-    component: React.lazy(() => import("../pages/chatpage/ChatPage")),
-  },
-  {
     path: '/teacher/dashboard',
     exact: true,
     component: React.lazy(() => import("../pages/homepage/TeacherHomePage")),
@@ -25,14 +20,14 @@ const PrivateRoutes = [
     component: React.lazy(() => import("../pages/homepage/StudentHomePage")),
   },
   {
-    path: '/teacher/about',
+    path: '/teacher/schedule',
     exact: true,
-    component: React.lazy(() => import("../pages/aboutpage/AboutPage")),
+    component: React.lazy(() => import("../pages/schedule/TeacherSchedulePage")),
   },
   {
-    path: '/student/about',
+    path: '/student/schedule',
     exact: true,
-    component: React.lazy(() => import("../pages/aboutpage/AboutPage")),
+    component: React.lazy(() => import("../pages/schedule/SchedulePage")),
   },
   {
     path: '/lessondata',
