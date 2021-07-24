@@ -69,25 +69,25 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
 
-Detailed instructions on accessing the application /
-Launching the application /
-Install Node.js, Python /
-https://nodejs.org/en/download/current/  /
-https://www.python.org/downloads/  /
-Install Django, Django REST Framework and Django CORS Headers /
-python -m pip install Django /
-pip install djangorestframework /
-python -m pip install django-cors-headers /
-Install JSON Web Token /
-pip install djangorestframework-jwt /
-Install Pillow /
-pip install pillow /
-Clone the repository from GitHub /
-Execute cd lifehack in the terminal to change directory into the repository /
-Run command npm install to install all dependencies. Ensure running app as administrator or use sudo /
-Once installed run command npm start /
+**Detailed instructions on accessing the application** <br />
+Launching the application <br />
+Install Node.js, Python <br />
+https://nodejs.org/en/download/current/  <br />
+https://www.python.org/downloads/  <br />
+Install Django, Django REST Framework and Django CORS Headers <br />
+python -m pip install Django <br />
+pip install djangorestframework <br />
+python -m pip install django-cors-headers <br />
+Install JSON Web Token <br />
+pip install djangorestframework-jwt <br />
+Install Pillow <br />
+pip install pillow <br />
+Clone the repository from GitHub <br />
+Execute cd lifehack in the terminal to change directory into the repository <br />
+Run command npm install to install all dependencies. Ensure running app as administrator or use sudo <br />
+Once installed run command npm start <br />
 In your browser go to localhost:3000 <br />
- In the terminal, cd backend to change directory to the backend /
- Run python manage.py migrate to migrate the changes made /
- Run command python manage.py runserver to run a development server locally /
- In your browser go to localhost: http://127.0.0.1:8000/admin /
+ In the terminal, cd backend to change directory to the backend <br />
+ Run python manage.py migrate to migrate the changes made <br />
+ Run command python manage.py runserver to run a development server locally <br />
+ In your browser go to localhost: http://127.0.0.1:8000/admin <br />
