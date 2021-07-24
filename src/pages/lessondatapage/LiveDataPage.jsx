@@ -31,6 +31,7 @@ function LiveDataPage(props) {
     if (pollUpdates) {
       API.get(`/api/class/fetchclass/${classId}`)
         .then(resp => {
+          setclassDetails(resp.data);
           // setLiveData(resp.data.liveData)
           // setBarchartData(resp.data.barchart)
           // setLiveChat(resp.data.chat)

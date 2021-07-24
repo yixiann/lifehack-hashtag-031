@@ -93,7 +93,7 @@ const LoginPage = ({
   }
 
   async function login(){
-    var { from } = location.state || { from: { pathname: `/${window.localStorage.getItem('role')}/dashboard` } };
+    var { from } = location.state || { from: { pathname: `/${window.localStorage.getItem('role')}/schedule` } };
     var values = form.getFieldsValue()
     console.log("VA", values)
     if(values){
@@ -135,7 +135,7 @@ const LoginPage = ({
 
   // If there is a token, sign in
   useEffect(()=>{
-    var { from } = location.state || { from: { pathname: "/home" } };
+    var { from } = location.state || { from: { pathname: "/" } };
     if(token){
       auth.signin(() => {
         history.replace(from);

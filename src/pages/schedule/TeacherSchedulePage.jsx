@@ -76,6 +76,7 @@ const TeacherSchedulePage = ({
     setLaunchData({
       link: item.link,
       classId: item.classId,
+      dateEnd: item.dateEnd,
     })
     setClassDetailsVisible(true)
   }
@@ -83,7 +84,13 @@ const TeacherSchedulePage = ({
   const launchClass = () => {
     window.localStorage.setItem('class', launchData.classId);
     if (launchData.link) window.open(launchData.link, '_blank');
-    history.push(`lessondata/reviewdata?classid=${launchData.classId}`);
+    if (moment(launchData.dateEnd).isBefore(moment())) {
+      console.log("BEFORE")
+      history.push(`/lessondata/reviewdata?classid=${launchData.classId}`);
+    } else {
+      console.log("AFTER")
+      history.push(`/lessondata/livedata?classid=${launchData.classId}`);
+    }
   }
 
   const disabledDate = (current) => {

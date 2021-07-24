@@ -19,7 +19,7 @@ export default function app() {
       <Router>
         <Switch>
           <Route exact path="/">
-            <Redirect to={`/${window.localStorage.getItem('role')}/dashboard`} />
+            <Redirect to={`/${window.localStorage.getItem('role')}/schedule`} />
           </Route>
           <Route exact path="/login">
             <LoginPage authContext={authContext}/>
