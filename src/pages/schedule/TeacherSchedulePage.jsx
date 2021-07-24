@@ -50,14 +50,10 @@ const TeacherSchedulePage = ({
         subject: e.subject,
         dateStart: new Date(e.datestart),
         dateEnd: new Date(e.dateend),
+        remarks: e.remarks,
       })))
     }
   }, [rawClassData]);
-
-  useEffect(() => {
-    console.log("classData", classData)
-  }, [classData])
-
 
 
   // takes 2 Date objects and compares Year, Month, Day
@@ -74,7 +70,8 @@ const TeacherSchedulePage = ({
       ["Class starts at", item.dateStart.toLocaleString()],
       ["Class ends at", item.dateEnd.toLocaleString()],
       ["Class Link", item.link],
-      ["Class Id", item.classId]
+      ["Class Id", item.classId],
+      ["Remarks", item.remarks],
     ])
     setLaunchData({
       link: item.link,
@@ -106,6 +103,7 @@ const TeacherSchedulePage = ({
       subject: values.subject,
       datestart: values.dateStart.toJSON(),
       dateend: values.dateEnd.toJSON(),
+      remarks: values.remarks,
     }).then(e => {
       console.log("test",e)
       successModal("Class Created.\n Your Class ID is " + e.data.classid);
@@ -239,6 +237,12 @@ const TeacherSchedulePage = ({
             label="Link to Class"
         >
             <Input size="large" placeholder="Link"/>
+        </Form.Item>
+        <Form.Item 
+            name="remarks" 
+            label="Remarks"
+        >
+            <Input size="large" placeholder="Any Remarks"/>
         </Form.Item>
         <Button type="primary" htmlType="submit" className="custom-blue-button">ADD CLASS</Button>
         </Form>
