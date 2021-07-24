@@ -72,16 +72,16 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/t
 **Detailed instructions on accessing the application** <br />
 Launching the application <br />
 Install Node.js, Python <br />
-https://nodejs.org/en/download/current/  <br />
-https://www.python.org/downloads/  <br />
+ - https://nodejs.org/en/download/current/  <br />
+ - https://www.python.org/downloads/  <br />
 Install Django, Django REST Framework and Django CORS Headers <br />
-python -m pip install Django <br />
-pip install djangorestframework <br />
-python -m pip install django-cors-headers <br />
+ - python -m pip install Django <br />
+ - pip install djangorestframework <br />
+ - python -m pip install django-cors-headers <br />
 Install JSON Web Token <br />
-pip install djangorestframework-jwt <br />
+ - pip install djangorestframework-jwt <br />
 Install Pillow <br />
-pip install pillow <br />
+ - pip install pillow <br />
 Clone the repository from GitHub <br />
 Execute cd lifehack in the terminal to change directory into the repository <br />
 Run command npm install to install all dependencies. Ensure running app as administrator or use sudo <br />
