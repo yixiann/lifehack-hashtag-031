@@ -9,7 +9,7 @@ import API from '../../API'
 const { Title, Text } = Typography
 
 function LiveDataPage(props) {
-  const classId = new URLSearchParams(window.location.search).get('classId');
+  const classId = new URLSearchParams(window.location.search).get('classid');
   const [loaded, setLoaded] = useState(false)
   const [classDetails, setclassDetails] = useState(null)
 
@@ -40,9 +40,9 @@ function LiveDataPage(props) {
     }
   }, [pollUpdates])
 
-  setInterval(function () {
-    setPollUpdates(true)
-  }, 60 * 1000)
+  // setInterval(function () {
+  //   setPollUpdates(true)
+  // }, 60 * 1000)
 
   const [liveData, setLiveData] = useState({
     yes: 20,

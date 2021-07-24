@@ -7,7 +7,7 @@ import { pastQuestions,allStudentOverallSummaryData, studentResultsData, subject
 
 function ReviewDataPage(props) {
 
-  const classId = new URLSearchParams(window.location.search).get('classId');
+  const classId = new URLSearchParams(window.location.search).get('classid');
 
   const [ visible, setVisible ] = useState(false)
 
