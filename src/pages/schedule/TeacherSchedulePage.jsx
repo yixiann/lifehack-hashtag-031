@@ -106,6 +106,7 @@ const TeacherSchedulePage = ({
       subject: values.subject,
       datestart: values.dateStart.toJSON(),
       dateend: values.dateEnd.toJSON(),
+      remarks: values.remarks,
     }).then(e => {
       console.log("test",e)
       successModal("Class Created.\n Your Class ID is " + e.data.classid);
@@ -239,6 +240,12 @@ const TeacherSchedulePage = ({
             label="Link to Class"
         >
             <Input size="large" placeholder="Link"/>
+        </Form.Item>
+        <Form.Item 
+            name="remarks" 
+            label="Remarks"
+        >
+            <Input size="large" placeholder="Any Remarks"/>
         </Form.Item>
         <Button type="primary" htmlType="submit" className="custom-blue-button">ADD CLASS</Button>
         </Form>
