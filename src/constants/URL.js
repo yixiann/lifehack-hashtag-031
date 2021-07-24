@@ -1,5 +1,5 @@
 const URI = {
-  app: 'api/app/',
+  app: '/api/app/',
   test: 'api/test/',
   signIn: 'token-auth/',
   signInRefresh: 'token-auth-refresh/',
