@@ -2,15 +2,19 @@ import React, { useState, useEffect } from 'react'
 import { Upload, Button, Calendar, Modal, Col, List, Row } from 'antd'
 import { UploadOutlined } from '@ant-design/icons';
 import { useHistory } from 'react-router-dom';
+import API from '../../API';
+import URI from '../../constants/URL';
+import moment from 'moment';
 
 
-const AboutPage = ({
+const SchedulePage = ({
   ...props
 }) => { 
 
   const history = useHistory();
 
   // fetch students class data
+  const [rawClassData, setRawClassData] = useState([]);
   const [classData, setClassData] = useState([]);
   const [classDetails, setClassDetails] = useState([]);
   const [launchData, setLaunchData] = useState({});
@@ -18,38 +22,57 @@ const AboutPage = ({
 
   // init
   useEffect(() => {
-    setClassData([
-      {
-        keyId: 0,
-        classId: 0,
-        link: "https://us02web.zoom.us/j/87894970398?pwd=VDlBMEMrUEYyOEdZalVZdFNpL2ZwUT09",
-        teacher: "Ms Ang Jia Ying",
-        subject: "English",
-        dateStart: new Date(2021, 7, 23, 15, 0, 0),
-        dateEnd: new Date(2021, 7, 23, 16, 0, 0),
-      },
-      {
-        keyId: 1,
-        classId: 1,
-        link: "https://us02web.zoom.us/j/87894970398?pwd=VDlBMEMrUEYyOEdZalVZdFNpL2ZwUT09",
-        teacher: "Mr Tan Yi Xian",
-        subject: "Math",
-        dateStart: new Date(2021, 7, 26, 15, 0, 0),
-        dateEnd: new Date(2021, 7, 26, 16, 0, 0),
-      },
-    ])
+    API.get("/api/class/").then(e => setRawClassData(e.data));
+
+    // API.post("/api/class/", {
+    //   classid: "0",
+    //   classname: "Computer Science",
+    //   zoomlink: "https://us02web.zoom.us/j/87894970398?pwd=VDlBMEMrUEYyOEdZalVZdFNpL2ZwUT09",
+    //   teacher: "Mr Tan",
+    //   subject: "Computer Science",
+    //   datestart: new Date().toJSON(),
+    //   dateend: new Date().toJSON(),
+    // }).then(e => console.log(e))
+
+
+
+    // setClassData([
+    //   {
+    //     keyId: 0,
+    //     classId: 0,
+    //     link: "https://us02web.zoom.us/j/87894970398?pwd=VDlBMEMrUEYyOEdZalVZdFNpL2ZwUT09",
+    //     teacher: "Ms Ang Jia Ying",
+    //     subject: "English",
+    //     dateStart: new Date(2021, 7, 23, 15, 0, 0),
+    //     dateEnd: new Date(2021, 7, 23, 16, 0, 0),
+    //   },
+    // ])
   },[]);
 
-  // map data
+
   useEffect(() => {
-  }, [classData]);
+    if (rawClassData.length > 0) {
+      setClassData(rawClassData.map(e => ({
+        keyId: e.classid,
+        classId: e.classid,
+        link: e.zoomlink,
+        teacher: e.teacher,
+        subject: e.subject,
+        dateStart: new Date(e.datestart),
+        dateEnd: new Date(e.dateend),
+      })))
+    }
+  }, [rawClassData]);
+
+  useEffect(() => {
+    console.log("classData", classData)
+  }, [classData])
+
 
 
   // takes 2 Date objects and compares Year, Month, Day
   const compareDateOnly = (a, b) => {
-    // console.log("a\n", a.getDate() + '-' + a.getMonth() + '-' + a.getFullYear());
-    // console.log("b\n", b.getDate() + '-' + b.getMonth() + '-' + b.getFullYear());
-    if (a.getDate() === b.getDate() && a.getMonth() === b.getMonth() ) {
+    if (a.getDate() === b.getDate() && a.getMonth() === b.getMonth() && a.getFullYear() === b.getFullYear()) {
       return true;
     }
   }
@@ -82,7 +105,7 @@ const AboutPage = ({
     <div className="About">
       <Calendar 
         dateCellRender={moment => {
-          const list = classData.filter(e => compareDateOnly(e.dateStart, new Date(moment.year(), moment.month()+1, moment.date())))
+          const list = classData.filter(e => compareDateOnly(e.dateStart, new Date(moment)));
           return (
             <>
             {list.length > 0 && list.map(item =>
@@ -136,4 +159,4 @@ const AboutPage = ({
   )
 }
 
-export default AboutPage
+export default SchedulePage
