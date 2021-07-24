@@ -23,26 +23,26 @@ function LiveDataPage(props) {
         .catch(resp => (console.log(resp)))
     }
   }, [classId])
-  
+
   const [pollUpdates, setPollUpdates] = useState(true)
 
   // Get updates every minute
   useEffect(() => {
-    if(pollUpdates) {
+    if (pollUpdates) {
       API.get(`/api/class/fetchclass/${classId}`)
-      .then(resp => {
-        // setLiveData(resp.data.liveData)
-        // setBarchartData(resp.data.barchart)
-        // setLiveChat(resp.data.chat)
-        setPollUpdates(false)
-      })
-      .catch(resp => (console.log(resp)))
+        .then(resp => {
+          // setLiveData(resp.data.liveData)
+          // setBarchartData(resp.data.barchart)
+          // setLiveChat(resp.data.chat)
+          setPollUpdates(false)
+        })
+        .catch(resp => (console.log(resp)))
     }
-  },[pollUpdates])
+  }, [pollUpdates])
 
-  setInterval(function() {
+  setInterval(function () {
     setPollUpdates(true)
-  }, 60*1000)
+  }, 60 * 1000)
 
   const [liveData, setLiveData] = useState({
     yes: 20,
@@ -78,27 +78,28 @@ function LiveDataPage(props) {
     { name: "I understand", count: 10 },
   ])
 
-
   return (
     <div className="LiveDataPage">
-      <Title>{classDetails !== null ? "Live Data" : "Class Not found"}</Title>
+      <Title>
+        {classDetails !== null ? `Live Data for Class ${classDetails.classname} at ${moment(classDetails.datestart).format("hh:mm a")}` : "Class Not found"}
+      </Title>
       {classDetails !== null && (
         <Card
           title={
             <div className="cardheader">
               <Row>Class: {classDetails.classname}</Row>
-              <Row>Remarks: {classDetails.remarks}</Row>
+              <Row>Subject: {classDetails.subject}</Row>
               <Row>Ends in: {moment(classDetails.dateend).fromNow()}</Row>
+              <Row>Remarks: {classDetails.remarks}</Row>
             </div>
           }
         >
           <Title className="liveChatSubheaders" level={3}>Pace of lesson</Title>
           <Row>
-            <Col span={2}>
-              Moving too slow!
-            <DoubleLeftOutlined />
+            <Col span={4}>
+              <Text style={{ fontSize: "18px" }}>Moving too slow!</Text>
             </Col>
-            <Col span={18}>
+            <Col span={16}>
               <Slider
                 range
                 step={10}
@@ -120,9 +121,8 @@ function LiveDataPage(props) {
                 }}
               />
             </Col>
-            <Col span={2}>
-              <DoubleRightOutlined />
-           Moving too fast!
+            <Col span={4}>
+            <Text style={{ fontSize: "18px"}}>Moving too fast!</Text>
           </Col>
           </Row>
           <Row>
