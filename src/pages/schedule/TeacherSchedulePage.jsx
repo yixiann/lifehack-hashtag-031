@@ -50,14 +50,10 @@ const TeacherSchedulePage = ({
         subject: e.subject,
         dateStart: new Date(e.datestart),
         dateEnd: new Date(e.dateend),
+        remarks: e.remarks,
       })))
     }
   }, [rawClassData]);
-
-  useEffect(() => {
-    console.log("classData", classData)
-  }, [classData])
-
 
 
   // takes 2 Date objects and compares Year, Month, Day
@@ -74,7 +70,8 @@ const TeacherSchedulePage = ({
       ["Class starts at", item.dateStart.toLocaleString()],
       ["Class ends at", item.dateEnd.toLocaleString()],
       ["Class Link", item.link],
-      ["Class Id", item.classId]
+      ["Class Id", item.classId],
+      ["Remarks", item.remarks],
     ])
     setLaunchData({
       link: item.link,
