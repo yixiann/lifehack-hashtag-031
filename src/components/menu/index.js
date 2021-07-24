@@ -8,14 +8,14 @@ const SiderBar = ({ ...props }) => {
     <Menu
       mode="inline"
     >
-      {window.localStorage.getItem('role') == 'student' &&
+      {window.localStorage.getItem('role') === 'student' &&
       <Menu.Item key={'home'}>
         <Link to={`/${window.localStorage.getItem('role')}/dashboard`}>
           Dashboard
         </Link>
       </Menu.Item>
       }
-      <Menu.Item key={'about'}>
+      <Menu.Item key={'schedule'}>
         <Link to={`/${window.localStorage.getItem('role')}/schedule`}>
           Schedule
         </Link>

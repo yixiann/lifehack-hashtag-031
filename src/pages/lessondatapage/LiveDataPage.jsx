@@ -13,16 +13,16 @@ function LiveDataPage(props) {
   const [loaded, setLoaded] = useState(false)
   const [classDetails, setclassDetails] = useState(null)
 
-  useEffect(() => {
-    if (classId !== null) {
-      API.get(`/api/class/fetchclass/${classId}`)
-        .then(resp => {
-          setclassDetails(resp.data)
-          setLoaded(prev => true)
-        })
-        .catch(resp => (console.log(resp)))
-    }
-  }, [classId])
+  // useEffect(() => {
+  //   if (classId !== null) {
+  //     API.get(`/api/class/fetchclass/${classId}`)
+  //       .then(resp => {
+  //         setclassDetails(resp.data)
+  //         setLoaded(prev => true)
+  //       })
+  //       .catch(resp => (console.log(resp)))
+  //   }
+  // }, [classId])
 
   const [pollUpdates, setPollUpdates] = useState(true)
 
